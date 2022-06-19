@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:attendance_app/Models/attendance_data.dart';
 import 'package:attendance_app/Models/employee_data.dart';
+import 'package:attendance_app/Models/employee_poi_data.dart';
 import 'package:attendance_app/Models/poi_data.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -222,7 +223,7 @@ class ApiCall {
       List<EmployeeDataModel> employeeIdList =
           employeeDataModelFromJson(response.body);
 
-      print('employee list print-> ${employeeIdList}');
+      // print('employee list print-> ${employeeIdList}');
 
       return employeeIdList;
     } else {
@@ -449,6 +450,26 @@ class ApiCall {
       print('attendanceList print-> ${attendanceList}');
 
       return attendanceList;
+    } else {
+      print("message failed");
+    }
+  }
+
+  List<EmpPoiDataModel> employeePoiList = [];
+  Future getAllEmployeePoi(
+      String token, String rowsPerPage, String pageNumber) async {
+    final response = await http.get(
+        Uri.parse(ApiList.getemployeePoiApi(rowsPerPage, pageNumber)),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        });
+    if (response.statusCode == 200) {
+      List<EmpPoiDataModel> employeePoiList =
+          empPoiDataModelFromJson(response.body);
+      print('employeePoiList print-> ${employeePoiList}');
+
+      return employeePoiList;
     } else {
       print("message failed");
     }

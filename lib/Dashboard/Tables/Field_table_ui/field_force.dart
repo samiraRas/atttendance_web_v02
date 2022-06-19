@@ -132,16 +132,16 @@ class _FieldForceDataState extends State<FieldForceData> {
                             onPressed: () {
                               setState(() {});
                             },
-                            child: const Text("Fetch Data")),
+                            child: const Text("Go To")),
                       ],
                     ),
                   ),
                   PaginatedDataTable(
                     // dragStartBehavior: DragStartBehavior.start,
-                    onRowsPerPageChanged: (perPage) {
-                      /**Api for load */
-                    },
-                    // rowsPerPage: 10,
+                    // onRowsPerPageChanged: (perPage) {
+                    //   /**Api for load */
+                    // },
+                    rowsPerPage: 50,
                     columns: Datacolumn(context),
 
                     source: TableRow(
@@ -175,15 +175,16 @@ class _FieldForceDataState extends State<FieldForceData> {
         style: Theme.of(context).textTheme.subtitle2,
       )),
       DataColumn(
-          label: Text(
-        "Employee Name",
-        style: Theme.of(context).textTheme.subtitle2,
-      )),
-      DataColumn(
-          label: Text(
-        "Designation",
-        style: Theme.of(context).textTheme.subtitle2,
-      )),
+        label: Text(
+          "Employee Name",
+          style: Theme.of(context).textTheme.subtitle2,
+        ),
+      ),
+      // DataColumn(
+      //     label: Text(
+      //   "Designation",
+      //   style: Theme.of(context).textTheme.subtitle2,
+      // )),
       DataColumn(
           label: Text(
         "Mobile Number",
@@ -235,8 +236,17 @@ class TableRow extends DataTableSource {
   DataRow? getRow(int index) {
     return DataRow.byIndex(index: index, cells: [
       DataCell(Center(child: Text(employeeData[index].employeeId))),
-      DataCell(Center(child: Text(employeeData[index].employeeName))),
-      DataCell(Center(child: Text(employeeData[index].designation))),
+      DataCell(Center(
+          child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Text(employeeData[index].employeeName),
+            Text("[${employeeData[index].designation}]"),
+          ],
+        ),
+      ))),
+      // DataCell(Center(child: Text(employeeData[index].designation))),
       DataCell(Center(child: Text(employeeData[index].mobile))),
       DataCell(Center(child: Text(employeeData[index].territory))),
       DataCell(Center(child: Text(employeeData[index].area))),
@@ -256,8 +266,8 @@ class TableRow extends DataTableSource {
                     return AlertDialog(
                       backgroundColor: bgColor,
                       content: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.20,
-                        height: MediaQuery.of(context).size.height * 0.20,
+                        width: MediaQuery.of(context).size.width * 0.45,
+                        height: MediaQuery.of(context).size.height * 0.45,
                         child: Column(
                           children: [
                             Form(
@@ -354,9 +364,12 @@ class TableRow extends DataTableSource {
                                   style: ElevatedButton.styleFrom(
                                     primary: primaryColor, // Background color
                                   ),
-                                  child: const Text(
-                                    "Submit",
-                                    style: TextStyle(color: Colors.white),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                      "Add",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
                                   ),
                                   onPressed: () async {
                                     if (controller.text != '') {
@@ -372,7 +385,38 @@ class TableRow extends DataTableSource {
                                   },
                                 ),
                               ],
-                            )
+                            ),
+
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  DataTable(
+                                    columns: const <DataColumn>[
+                                      DataColumn(label: Text("POI ID")),
+                                      DataColumn(label: Text("POI Name")),
+                                      DataColumn(label: Text("Action"))
+                                    ],
+                                    rows: const <DataRow>[
+                                      DataRow(
+                                        cells: <DataCell>[
+                                          DataCell(
+                                            Text("poiId1"),
+                                          ),
+                                          DataCell(
+                                            Text("name2"),
+                                          ),
+                                          DataCell(
+                                            Text("Delete"),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -384,6 +428,7 @@ class TableRow extends DataTableSource {
               icon: const Icon(Icons.store),
               color: primaryColor,
             ),
+
             FieldEditView(
               // Edit Icon in Action Row
               employeeId: employeeData[index].employeeId,

@@ -115,12 +115,64 @@ class _DashboardScreenState extends State<DashboardScreen> {
     String csv = const ListToCsvConverter().convert(rows);
 
     String withHeading =
-        'poiId,poiType,union,thana,district,division,market,territory,area,region,zone,lat,long\n' +
+        'cid,employeeId,employeeName,designation,mobile,email,market,territory,area,region,zone\n' +
             csv;
     AnchorElement()
       ..href =
           '${Uri.dataFromString(withHeading, mimeType: 'text/csv', encoding: utf8)}'
       ..download = 'file.csv'
+      ..style.display = 'none'
+      ..click();
+  }
+
+  getpoiformat() {
+    // print(getList[0].market);
+
+    List<List<dynamic>> rows = [];
+
+    String csv = const ListToCsvConverter().convert(rows);
+
+    String withHeading =
+        'poiId,poiType,union,thana,district,division,market,territory,area,region,zone,lat,long\n' +
+            csv;
+    AnchorElement()
+      ..href =
+          '${Uri.dataFromString(withHeading, mimeType: 'text/csv', encoding: utf8)}'
+      ..download = 'poi.csv'
+      ..style.display = 'none'
+      ..click();
+  }
+
+  getFFformat() {
+    // print(getList[0].market);
+
+    List<List<dynamic>> rows = [];
+
+    String csv = const ListToCsvConverter().convert(rows);
+
+    String withHeading =
+        'poiId,poiType,union,thana,district,division,market,territory,area,region,zone,lat,long\n' +
+            csv;
+    AnchorElement()
+      ..href =
+          '${Uri.dataFromString(withHeading, mimeType: 'text/csv', encoding: utf8)}'
+      ..download = 'field_force.csv'
+      ..style.display = 'none'
+      ..click();
+  }
+
+  getFFpoiformat() {
+    // print(getList[0].market);
+
+    List<List<dynamic>> rows = [];
+
+    String csv = const ListToCsvConverter().convert(rows);
+
+    String withHeading = 'cid,employeeId,poiId\n' + csv;
+    AnchorElement()
+      ..href =
+          '${Uri.dataFromString(withHeading, mimeType: 'text/csv', encoding: utf8)}'
+      ..download = 'poi_user.csv'
       ..style.display = 'none'
       ..click();
   }
@@ -245,9 +297,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 //         .toList(),
                 //     onChanged: (item) => setState(() => selectedItem = item),
                 //   ),
+
                 const SizedBox(
                   width: 14,
                 ),
+
                 // Expanded(
                 //   child: TextField(
                 //     // controller: controller,
@@ -338,7 +392,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               style: TextStyle(fontSize: 15),
                             ),
                           )
-                        : AttendancePopupView(),
+                        : Text(''),
 
                 // Row(
                 //   children: [
@@ -385,9 +439,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 //     onPressed: () {
                 //       setState(() {});
                 //     },
-                //     child: const Text("Fetch Data")),
+                //     child: const Text("Go To")),
+
                 // *************************************************************************
-                // **********************BATCH POI UPLOAD UI**********************************
+                // **********************ff UPLOAD UI**********************************
                 // *************************************************************************
                 // *************************************************************************
 
@@ -396,35 +451,50 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ? SizedBox(
                             width: 75.0,
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  minimumSize: const Size(100, 40),
-                                  // maximumSize: const Size(150, 50),
-                                ),
-                                onPressed: () async {
-                                  await batchUploadEmployeePoi();
-                                  setState(() {});
-                                },
-                                child: const Icon(Icons.file_copy),
-                              ),
-                            ),
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        minimumSize: const Size(100, 40),
+                                        // maximumSize: const Size(150, 50),
+                                      ),
+                                      onPressed: () async {
+                                        await batchUploadEmployeePoi();
+                                        setState(() {});
+                                      },
+                                      child: const Icon(Icons.file_copy),
+                                    ),
+                                    TextButton(
+                                        onPressed: () {
+                                          getFFpoiformat();
+                                        },
+                                        child: Text("Download Format"))
+                                  ],
+                                )),
                           )
                         : Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SizedBox(
-                              child: ElevatedButton.icon(
-                                style: ElevatedButton.styleFrom(
-                                  minimumSize: const Size(100, 40),
+                              child: Column(children: [
+                                ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size(100, 40),
+                                  ),
+                                  onPressed: () async {
+                                    // print('big ${widget.which_button}');
+                                    await batchUploadEmployeePoi();
+                                    setState(() {});
+                                  },
+                                  icon: const Icon(Icons.file_copy),
+                                  label: const Text("FF POI Upload"),
                                 ),
-                                onPressed: () async {
-                                  // print('big ${widget.which_button}');
-                                  await batchUploadEmployeePoi();
-                                  setState(() {});
-                                },
-                                icon: const Icon(Icons.file_copy),
-                                label: const Text("FF POI Upload"),
-                              ),
+                                TextButton(
+                                    onPressed: () {
+                                      getFFpoiformat();
+                                    },
+                                    child: Text("Download Format"))
+                              ]),
                             ),
                           )
                     : const SizedBox(
@@ -432,53 +502,91 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
 
                 // *************************************************************************
-                // **********************BATCH EMPLOYEE UPLOAD UI**********************************
+                // **********************poi UPLOAD UI**********************************
                 // *************************************************************************
                 // *************************************************************************
-
-                ResponsiveWidget.isSmallScreen(context)
-                    ? SizedBox(
-                        width: 75,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(100, 40),
-                            // maximumSize: const Size(150, 50),
-                          ),
-                          onPressed: () async {
-                            if (widget.which_button == 'POI Table') {
-                              await batchUploadPoi();
-                              setState(() {});
-                            } else if (widget.which_button == 'Field Force') {
-                              await batchUploadFieldForce();
-                              setState(() {});
-                            }
-                          },
-                          child: const Icon(Icons.file_copy),
-                        ),
-                      )
-                    : ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(100, 40),
-                        ),
-                        onPressed: () async {
-                          if (widget.which_button == 'POI Table') {
-                            // print('big ${widget.which_button}');
-                            await batchUploadPoi();
-                            setState(() {});
-                          } else if (widget.which_button == 'Field Force') {
-                            // print('big ${widget.which_button}');
-                            await batchUploadFieldForce();
-                            setState(() {});
-                          } else {}
-                          //setState(() {});
-                        },
-                        icon: const Icon(Icons.file_copy),
-                        label: const Text("POI Upload"),
+                widget.which_button != 'Attendance table'
+                    ? ResponsiveWidget.isSmallScreen(context)
+                        ? SizedBox(
+                            width: 75,
+                            child: Column(
+                              children: [
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size(100, 40),
+                                    // maximumSize: const Size(150, 50),
+                                  ),
+                                  onPressed: () async {
+                                    if (widget.which_button == 'POI Table') {
+                                      await batchUploadPoi();
+                                      setState(() {});
+                                    } else if (widget.which_button ==
+                                        'Field Force') {
+                                      await batchUploadFieldForce();
+                                      setState(() {});
+                                    }
+                                  },
+                                  child: const Icon(Icons.file_copy),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      if (widget.which_button == 'POI Table') {
+                                        // print('big ${widget.which_button}');
+                                        getpoiformat();
+                                        setState(() {});
+                                      } else if (widget.which_button ==
+                                          "Field Force") {
+                                        getFFformat();
+                                        setState(() {});
+                                      }
+                                    },
+                                    child: Text("Download Format"))
+                              ],
+                            ))
+                        : Column(
+                            children: [
+                              ElevatedButton.icon(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(100, 40),
+                                ),
+                                onPressed: () async {
+                                  if (widget.which_button == 'POI Table') {
+                                    // print('big ${widget.which_button}');
+                                    await batchUploadPoi();
+                                    setState(() {});
+                                  } else if (widget.which_button ==
+                                      'Field Force') {
+                                    // print('big ${widget.which_button}');
+                                    await batchUploadFieldForce();
+                                    setState(() {});
+                                  } else {}
+                                  //setState(() {});
+                                },
+                                icon: const Icon(Icons.file_copy),
+                                label: const Text("POI Upload"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  if (widget.which_button == 'POI Table') {
+                                    // print('big ${widget.which_button}');
+                                    getpoiformat();
+                                    setState(() {});
+                                  } else if (widget.which_button ==
+                                      "Field Force") {
+                                    getFFformat();
+                                    setState(() {});
+                                  }
+                                },
+                                child: Text("Download Format"), //POI UPLOAD
+                              )
+                            ],
+                          )
+                    : const SizedBox(
+                        width: 8,
                       ),
                 const SizedBox(
                   width: 8,
                 ),
-
                 // *************************************************************************
                 // ***************************DOWNLOAD UI********************************************
                 // *************************************************************************
@@ -487,27 +595,36 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ResponsiveWidget.isSmallScreen(context)
                     ? SizedBox(
                         width: 75,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(100, 40),
+                        child: Column(
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(100, 40),
+                              ),
+                              onPressed: () {},
+                              child: const Icon(Icons.download),
+                            ),
+                            TextButton(onPressed: () {}, child: Text(""))
+                          ],
+                        ))
+                    : Column(
+                        children: [
+                          ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: const Size(100, 40),
+                            ),
+                            onPressed: () {
+                              if (widget.which_button == 'POI Table') {
+                                getCsv(getList);
+                              } else if (widget.which_button == 'Field Force') {
+                                getFieldCSV(getFieldForceList);
+                              }
+                            },
+                            icon: const Icon(Icons.download),
+                            label: const Text("Download"),
                           ),
-                          onPressed: () {},
-                          child: const Icon(Icons.download),
-                        ),
-                      )
-                    : ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(100, 40),
-                        ),
-                        onPressed: () {
-                          if (widget.which_button == 'POI Table') {
-                            getCsv(getList);
-                          } else if (widget.which_button == 'Field Force') {
-                            getFieldCSV(getFieldForceList);
-                          }
-                        },
-                        icon: const Icon(Icons.download),
-                        label: const Text("Download"),
+                          TextButton(onPressed: () {}, child: Text(""))
+                        ],
                       )
               ],
             ),
@@ -515,63 +632,63 @@ class _DashboardScreenState extends State<DashboardScreen> {
             const SizedBox(
               height: defultPadding,
             ),
-            Row(
-              children: [
-                Spacer(),
-                widget.which_button == 'Field Force'
-                    ? ResponsiveWidget.isSmallScreen(context)
-                        ? SizedBox(
-                            width: 75.0,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  minimumSize: const Size(100, 40),
-                                  // maximumSize: const Size(150, 50),
-                                ),
-                                onPressed: () async {
-                                  await batchUploadEmployeePoi();
-                                  setState(() {});
-                                },
-                                child: const Icon(Icons.file_copy),
-                              ),
-                            ),
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              child: ElevatedButton.icon(
-                                style: ElevatedButton.styleFrom(
-                                  minimumSize: const Size(100, 40),
-                                ),
-                                onPressed: () async {
-                                  // print('big ${widget.which_button}');
-                                  await batchUploadEmployeePoi();
-                                  setState(() {});
-                                },
-                                icon: const Icon(Icons.file_copy),
-                                label: const Text("FF POI Download Format"),
-                              ),
-                            ),
-                          )
-                    : const SizedBox(
-                        width: 8,
-                      ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text("Download Format"),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {});
-                  },
-                  child: Text("Refresh"),
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Spacer(),
+            //     widget.which_button == 'Field Force'
+            //         ? ResponsiveWidget.isSmallScreen(context)
+            //             ? SizedBox(
+            //                 width: 75.0,
+            //                 child: Padding(
+            //                   padding: const EdgeInsets.all(8.0),
+            //                   child: ElevatedButton(
+            //                     style: ElevatedButton.styleFrom(
+            //                       minimumSize: const Size(100, 40),
+            //                       // maximumSize: const Size(150, 50),
+            //                     ),
+            //                     onPressed: () async {
+            //                       await batchUploadEmployeePoi();
+            //                       setState(() {});
+            //                     },
+            //                     child: const Icon(Icons.file_copy),
+            //                   ),
+            //                 ),
+            //               )
+            //             : Padding(
+            //                 padding: const EdgeInsets.all(8.0),
+            //                 child: SizedBox(
+            //                   child: ElevatedButton.icon(
+            //                     style: ElevatedButton.styleFrom(
+            //                       minimumSize: const Size(100, 40),
+            //                     ),
+            //                     onPressed: () async {
+            //                       // print('big ${widget.which_button}');
+            //                       await batchUploadEmployeePoi();
+            //                       setState(() {});
+            //                     },
+            //                     icon: const Icon(Icons.file_copy),
+            //                     label: const Text("FF POI Download Format"),
+            //                   ),
+            //                 ),
+            //               )
+            //         : const SizedBox(
+            //             width: 8,
+            //           ),
+            //     ElevatedButton(
+            //       onPressed: () {},
+            //       child: Text("Download Format"),
+            //     ),
+            //     SizedBox(
+            //       width: 8,
+            //     ),
+            //     ElevatedButton(
+            //       onPressed: () {
+            //         setState(() {});
+            //       },
+            //       child: Text("Refresh"),
+            //     ),
+            //   ],
+            // ),
 
             // *************************************************************************
             // ***************************TABLE UI ********************************************
