@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:attendance_app/Models/attendance_data.dart';
 import 'package:attendance_app/Models/employee_data.dart';
 import 'package:attendance_app/Models/poi_data.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:attendance_app/Services/apis.dart';
@@ -68,6 +69,12 @@ class ApiCall {
       if (response.statusCode == 200) {
         Fluttertoast.showToast(
             msg: 'Successfully Uploaded ',
+            toastLength: Toast.LENGTH_SHORT,
+            webPosition: "center");
+      } else {
+        Fluttertoast.showToast(
+            backgroundColor: Colors.red,
+            msg: 'Failed',
             toastLength: Toast.LENGTH_SHORT,
             webPosition: "center");
       }
@@ -248,6 +255,12 @@ class ApiCall {
             msg: 'Successfully Uploaded ',
             toastLength: Toast.LENGTH_SHORT,
             webPosition: "center");
+      } else {
+        Fluttertoast.showToast(
+            backgroundColor: Colors.red,
+            msg: 'Failed',
+            toastLength: Toast.LENGTH_SHORT,
+            webPosition: "center");
       }
     });
   }
@@ -268,6 +281,12 @@ class ApiCall {
       if (response.statusCode == 200) {
         Fluttertoast.showToast(
             msg: 'Successfully Uploaded ',
+            toastLength: Toast.LENGTH_SHORT,
+            webPosition: "center");
+      } else {
+        Fluttertoast.showToast(
+            backgroundColor: Colors.red,
+            msg: 'Failed',
             toastLength: Toast.LENGTH_SHORT,
             webPosition: "center");
       }

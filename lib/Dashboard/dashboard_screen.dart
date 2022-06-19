@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 import 'package:attendance_app/widgets/responsive_login.dart';
 import 'package:attendance_app/Services/constants.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'Tables/Attendance_table_ui/attendance_add_row.dart';
 import 'Tables/Attendance_table_ui/attendence_table.dart';
@@ -136,7 +137,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       allowedExtensions: ['csv'],
     );
     if (results == null) {
-      return "File is not selected";
+      return Fluttertoast.showToast(
+          backgroundColor: Colors.red,
+          webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
+          msg: 'File is not selected',
+          toastLength: Toast.LENGTH_SHORT,
+          webPosition: "center");
     } else {
       csvFile = results.files.first.bytes;
       //print(csvFile);
@@ -162,7 +168,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       allowedExtensions: ['csv'],
     );
     if (results == null) {
-      return "file is empty";
+      return Fluttertoast.showToast(
+          backgroundColor: Colors.red,
+          webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
+          msg: 'File is not selected',
+          toastLength: Toast.LENGTH_SHORT,
+          webPosition: "center");
     } else {
       csvFile = results.files.first.bytes;
       //print(csvFile);
@@ -185,7 +196,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
 
     if (results == null) {
-      return "file is empty";
+      return Fluttertoast.showToast(
+          backgroundColor: Colors.red,
+          webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
+          msg: 'File is not selected',
+          toastLength: Toast.LENGTH_SHORT,
+          webPosition: "center");
     } else {
       csvFile = results.files.first.bytes;
       //print(csvFile);
@@ -385,10 +401,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 //       setState(() {});
                 //     },
                 //     child: const Text("Fetch Data")),
-                // *************************************************************************
-                // **********************BATCH POI UPLOAD UI**********************************
-                // *************************************************************************
-                // *************************************************************************
+// *************************************************************************************************
+// **********************BATCH POI UPLOAD UI******************************************************
+// **************************************************************************************************
+// *****************************************************************************************************
 
                 widget.which_button == 'Field Force'
                     ? ResponsiveWidget.isSmallScreen(context)
