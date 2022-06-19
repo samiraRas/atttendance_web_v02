@@ -264,39 +264,40 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 const SizedBox(
                   width: 14,
                 ),
-                Expanded(
-                    child: TextField(
-                  // controller: controller,
-                  // onChanged: (value) {
-                  //   {
-                  //     setState(() {
-                  //       _searchResult = value;
-                  //       usersFiltered = demoRecentFiles
-                  //           .where((fileinfo) =>
-                  //               fileinfo.cid.contains(_searchResult) ||
-                  //               fileinfo.poiId.contains(_searchResult))
-                  //           .toList();
-                  //     });
-                  //   }
-                  // },
-                  decoration: InputDecoration(
-                    hintText: "Search Field",
-                    fillColor: secondaryColor,
-                    filled: true,
-                    border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                        borderSide: BorderSide.none),
-                    suffixIcon: InkWell(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                      onTap: () {},
-                      child: const Icon(Icons.search),
-                    ),
-                  ),
-                ))
+                // Expanded(
+                //   child: TextField(
+                //     // controller: controller,
+                //     // onChanged: (value) {
+                //     //   {
+                //     //     setState(() {
+                //     //       _searchResult = value;
+                //     //       usersFiltered = demoRecentFiles
+                //     //           .where((fileinfo) =>
+                //     //               fileinfo.cid.contains(_searchResult) ||
+                //     //               fileinfo.poiId.contains(_searchResult))
+                //     //           .toList();
+                //     //     });
+                //     //   }
+                //     // },
+                //     decoration: InputDecoration(
+                //       hintText: "Search Field",
+                //       fillColor: secondaryColor,
+                //       filled: true,
+                //       border: const OutlineInputBorder(
+                //           borderRadius: BorderRadius.all(
+                //             Radius.circular(10),
+                //           ),
+                //           borderSide: BorderSide.none),
+                //       suffixIcon: InkWell(
+                //         borderRadius: const BorderRadius.all(
+                //           Radius.circular(10),
+                //         ),
+                //         onTap: () {},
+                //         child: const Icon(Icons.search),
+                //       ),
+                //     ),
+                //   ),
+                // )
               ],
             ),
             const SizedBox(
@@ -438,7 +439,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   setState(() {});
                                 },
                                 icon: const Icon(Icons.file_copy),
-                                label: const Text("POI Upload"),
+                                label: const Text("FF POI Upload"),
                               ),
                             ),
                           )
@@ -488,7 +489,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           //setState(() {});
                         },
                         icon: const Icon(Icons.file_copy),
-                        label: const Text("Batch Upload"),
+                        label: const Text("POI Upload"),
                       ),
                 const SizedBox(
                   width: 8,
@@ -529,6 +530,63 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
             const SizedBox(
               height: defultPadding,
+            ),
+            Row(
+              children: [
+                Spacer(),
+                widget.which_button == 'Field Force'
+                    ? ResponsiveWidget.isSmallScreen(context)
+                        ? SizedBox(
+                            width: 75.0,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(100, 40),
+                                  // maximumSize: const Size(150, 50),
+                                ),
+                                onPressed: () async {
+                                  await batchUploadEmployeePoi();
+                                  setState(() {});
+                                },
+                                child: const Icon(Icons.file_copy),
+                              ),
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              child: ElevatedButton.icon(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(100, 40),
+                                ),
+                                onPressed: () async {
+                                  // print('big ${widget.which_button}');
+                                  await batchUploadEmployeePoi();
+                                  setState(() {});
+                                },
+                                icon: const Icon(Icons.file_copy),
+                                label: const Text("FF POI Download Format"),
+                              ),
+                            ),
+                          )
+                    : const SizedBox(
+                        width: 8,
+                      ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text("Download Format"),
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {});
+                  },
+                  child: Text("Refresh"),
+                ),
+              ],
             ),
 
             // *************************************************************************
