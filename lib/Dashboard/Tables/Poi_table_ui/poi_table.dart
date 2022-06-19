@@ -215,30 +215,6 @@ class _PoiTableDataState extends State<PoiTableData> {
       ),
       DataColumn(
         label: Text(
-          "Union",
-          style: Theme.of(context).textTheme.subtitle2,
-        ),
-      ),
-      DataColumn(
-        label: Text(
-          "Thana",
-          style: Theme.of(context).textTheme.subtitle2,
-        ),
-      ),
-      DataColumn(
-        label: Text(
-          "District",
-          style: Theme.of(context).textTheme.subtitle2,
-        ),
-      ),
-      DataColumn(
-        label: Text(
-          "Division",
-          style: Theme.of(context).textTheme.subtitle2,
-        ),
-      ),
-      DataColumn(
-        label: Text(
           "Market",
           style: Theme.of(context).textTheme.subtitle2,
         ),
@@ -312,10 +288,6 @@ class TableRow extends DataTableSource {
       cells: [
         DataCell(Center(child: Text((poiData[index].poiId)))),
         DataCell(Center(child: Text(poiData[index].poiType))),
-        DataCell(Center(child: Text(poiData[index].union))),
-        DataCell(Center(child: Text(poiData[index].thana))),
-        DataCell(Center(child: Text(poiData[index].district))),
-        DataCell(Center(child: Text(poiData[index].division))),
         DataCell(Center(child: Text(poiData[index].market))),
         DataCell(Center(child: Text(poiData[index].territory))),
         DataCell(Center(child: Text(poiData[index].area))),

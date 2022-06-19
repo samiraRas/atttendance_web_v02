@@ -171,11 +171,6 @@ class _FieldForceDataState extends State<FieldForceData> {
     return <DataColumn>[
       DataColumn(
           label: Text(
-        "CID",
-        style: Theme.of(context).textTheme.subtitle2,
-      )),
-      DataColumn(
-          label: Text(
         "Employee ID",
         style: Theme.of(context).textTheme.subtitle2,
       )),
@@ -196,16 +191,6 @@ class _FieldForceDataState extends State<FieldForceData> {
       )),
       DataColumn(
           label: Text(
-        "E-mail",
-        style: Theme.of(context).textTheme.subtitle2,
-      )),
-      DataColumn(
-          label: Text(
-        "Market",
-        style: Theme.of(context).textTheme.subtitle2,
-      )),
-      DataColumn(
-          label: Text(
         "Territory",
         style: Theme.of(context).textTheme.subtitle2,
       )),
@@ -217,11 +202,6 @@ class _FieldForceDataState extends State<FieldForceData> {
       DataColumn(
           label: Text(
         "Region",
-        style: Theme.of(context).textTheme.subtitle2,
-      )),
-      DataColumn(
-          label: Text(
-        "Zone",
         style: Theme.of(context).textTheme.subtitle2,
       )),
       DataColumn(
@@ -254,17 +234,13 @@ class TableRow extends DataTableSource {
   @override
   DataRow? getRow(int index) {
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Center(child: Text(employeeData[index].cid))),
       DataCell(Center(child: Text(employeeData[index].employeeId))),
       DataCell(Center(child: Text(employeeData[index].employeeName))),
       DataCell(Center(child: Text(employeeData[index].designation))),
       DataCell(Center(child: Text(employeeData[index].mobile))),
-      DataCell(Center(child: Text(employeeData[index].email))),
-      DataCell(Center(child: Text(employeeData[index].market))),
       DataCell(Center(child: Text(employeeData[index].territory))),
       DataCell(Center(child: Text(employeeData[index].area))),
       DataCell(Center(child: Text(employeeData[index].region))),
-      DataCell(Center(child: Text(employeeData[index].zone))),
       DataCell(Center(
         child: Row(
           //icons in action row
