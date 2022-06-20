@@ -5,6 +5,7 @@ import 'package:attendance_app/Models/poi_data.dart';
 import 'package:attendance_app/Services/constants.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Services/api_call.dart';
 
@@ -260,6 +261,14 @@ class _PoiTableDataState extends State<PoiTableData> {
 }
 
 class TableRow extends DataTableSource {
+  launchUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      Text('Failed');
+    }
+  }
+
   List<PoiDataModel> poiData;
 
   // String<PoiTableData> allData;
@@ -294,8 +303,16 @@ class TableRow extends DataTableSource {
         DataCell(Center(child: Text(poiData[index].region))),
         DataCell(Center(child: Text(poiData[index].zone))),
         DataCell(Center(
-            child: Text(
-                '${double.parse(poiData[index].lat).toStringAsFixed(3)} , ${double.parse(poiData[index].long).toStringAsFixed(3)}'))),
+          child: TextButton(
+            onPressed: () {
+              launchUrl(
+                  "https://maps.google.com/?q=${double.parse(poiData[index].lat)},${double.parse(poiData[index].long)}");
+            },
+            child: Text('Location'),
+          ),
+          // child: Text(
+          //     '${double.parse(poiData[index].lat).toStringAsFixed(3)} , ${double.parse(poiData[index].long).toStringAsFixed(3)}'),
+        )),
         // DataCell(Center(child: Text(poiData[index].long))),
         DataCell(
           Row(
