@@ -11,8 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:attendance_app/widgets/responsive_login.dart';
 import 'package:attendance_app/Services/constants.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import 'Tables/Attendance_table_ui/attendance_add_row.dart';
 import 'Tables/Attendance_table_ui/attendence_table.dart';
 import 'Tables/Field_table_ui/field_force.dart';
 import 'Tables/Field_table_ui/filed_add_row.dart';
@@ -408,7 +406,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               style: TextStyle(fontSize: 15),
                             ),
                           )
-                        : Text(''),
+                        : const Text(''),
 
                 // Row(
                 //   children: [
@@ -485,7 +483,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         onPressed: () {
                                           getFFpoiformat();
                                         },
-                                        child: Text("Download Format"))
+                                        child: const Text("Download Format"))
                                   ],
                                 )),
                           )
@@ -509,7 +507,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     onPressed: () {
                                       getFFpoiformat();
                                     },
-                                    child: Text("Download Format"))
+                                    child: const Text("Download Format"))
                               ]),
                             ),
                           )
@@ -556,7 +554,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         setState(() {});
                                       }
                                     },
-                                    child: Text("Download Format"))
+                                    child: const Text("Download Format"))
                               ],
                             ))
                         : Column(
@@ -593,7 +591,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     setState(() {});
                                   }
                                 },
-                                child: Text("Download Format"), //POI UPLOAD
+                                child:
+                                    const Text("Download Format"), //POI UPLOAD
                               )
                             ],
                           )
@@ -620,7 +619,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               onPressed: () {},
                               child: const Icon(Icons.download),
                             ),
-                            TextButton(onPressed: () {}, child: Text(""))
+                            TextButton(onPressed: () {}, child: const Text(""))
                           ],
                         ))
                     : Column(
@@ -639,7 +638,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             icon: const Icon(Icons.download),
                             label: const Text("Download"),
                           ),
-                          TextButton(onPressed: () {}, child: Text(""))
+                          TextButton(onPressed: () {}, child: const Text(""))
                         ],
                       )
               ],

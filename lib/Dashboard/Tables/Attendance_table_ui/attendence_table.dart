@@ -216,11 +216,11 @@ class TableRow extends DataTableSource {
         DataCell(Center(child: Text(attendanceData[index].employeeName))),
         DataCell(Center(child: Text(attendanceData[index].employeeId))),
         DataCell(Center(child: Text(attendanceData[index].mobile))),
-        DataCell(Center(child: Text(""))),
+        const DataCell(Center(child: Text(""))),
         (attendanceData[index].poiId.length > 0)
             ? DataCell(
                 Center(child: Text(attendanceData[index].poiId.first.poiId)))
-            : DataCell(Center(child: Text('No PoiID'))),
+            : const DataCell(Center(child: Text('No PoiID'))),
         // DataCell(Center(
         //     child: Text(
         //         tmformat.format(attendanceData[index].attendanceDateTime)))),
