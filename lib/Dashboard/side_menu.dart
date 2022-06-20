@@ -74,34 +74,35 @@ class _SideMenuState extends State<SideMenu> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Badge(
-                    badgeContent: IconButton(
-                      icon: const Icon(Icons.add_a_photo_outlined),
-                      color: Colors.white54,
-                      onPressed: () async {
-                        uploadImage();
-                      },
-                    ),
-                    badgeColor: const Color(0xff212332),
-                    position: BadgePosition.bottomEnd(),
-                    child: Container(
-                      width: 120,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: (_file.path == "zz")
-                              ? const AssetImage("images/bg.jpg")
-                              : (kIsWeb)
-                                  ? Image.memory(webImage).image
-                                  : Image.file(_file).image,
-                        ),
+                  // Badge(
+                  // badgeContent: IconButton(
+                  //   icon: const Icon(Icons.add_a_photo_outlined),
+                  //   color: Colors.white54,
+                  //   onPressed: () async {
+                  //     uploadImage();
+                  //   },
+                  // ),
+                  // badgeColor: const Color(0xff212332),
+                  // position: BadgePosition.bottomEnd(),
+                  // child: Container(
+                  Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: (_file.path == "zz")
+                            ? const AssetImage("images/bg.jpg")
+                            : (kIsWeb)
+                                ? Image.memory(webImage).image
+                                : Image.file(_file).image,
                       ),
                     ),
                   ),
+                  // ),
                   const Text(
-                    "Company Name[CID]",
+                    "Company Name",
                     style: TextStyle(color: Colors.white54),
                   )
                 ],
@@ -122,6 +123,16 @@ class _SideMenuState extends State<SideMenu> {
             setString: widget.setString!,
             title: "Attendance table",
             icon: FontAwesomeIcons.house,
+          ),
+          DrawListTile(
+            setString: widget.setString!,
+            title: "POI User",
+            icon: Icons.factory,
+          ),
+          DrawListTile(
+            setString: widget.setString!,
+            title: "Report",
+            icon: Icons.report,
           ),
           ElevatedButton.icon(
             onPressed: () async {

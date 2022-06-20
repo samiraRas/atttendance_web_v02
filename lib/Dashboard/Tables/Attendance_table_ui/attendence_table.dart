@@ -111,12 +111,12 @@ class _AttendenceTableDataState extends State<AttendenceTableData> {
                               onPressed: () {
                                 setState(() {});
                               },
-                              child: const Text("Fetch Data")),
+                              child: const Text("Go To")),
                         ],
                       ),
                     ),
                     PaginatedDataTable(
-                      // rowsPerPage: 10,
+                      rowsPerPage: 50,
                       // onRowsPerPageChanged: (value) {
                       //   var rowsPerPage1 = value ?? 0;
                       //   setState(() {
