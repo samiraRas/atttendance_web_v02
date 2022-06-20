@@ -1,8 +1,6 @@
 // To parse this JSON data, do
 //
 //     final employeeDataModel = employeeDataModelFromJson(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 List<EmployeeDataModel> employeeDataModelFromJson(String str) =>

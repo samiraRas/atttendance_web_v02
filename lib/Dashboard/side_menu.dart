@@ -134,6 +134,9 @@ class _SideMenuState extends State<SideMenu> {
             title: "Report",
             icon: Icons.report,
           ),
+          const SizedBox(
+            height: 8,
+          ),
           ElevatedButton.icon(
             onPressed: () async {
               SharedPreferences pref = await SharedPreferences.getInstance();
@@ -185,7 +188,11 @@ class _DrawListTileState extends State<DrawListTile> {
               ? widget.setString("POI Table")
               : widget.title == "Field Force"
                   ? widget.setString("Field Force")
-                  : widget.setString("Attendance table");
+                  : widget.title == "Attendance table"
+                      ? widget.setString("Attendance table")
+                      : widget.title == "POI User"
+                          ? widget.setString("POI User")
+                          : widget.setString("Report");
         },
         leading: Icon(widget.icon, size: 18, color: Colors.white54),
         horizontalTitleGap: 0.0,
