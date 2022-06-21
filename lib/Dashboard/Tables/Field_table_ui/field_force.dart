@@ -27,7 +27,7 @@ class FieldForceData extends StatefulWidget {
 class _FieldForceDataState extends State<FieldForceData> {
   ScrollController scrollController = ScrollController();
   var rowsPerPage = "50";
-  String pageNumber = "1";
+  int pageNumber = 1;
 
   //Employee Poi Add Row
   TextEditingController emplopyeeIdController = TextEditingController();
@@ -51,7 +51,8 @@ class _FieldForceDataState extends State<FieldForceData> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: ApiCall().getAllEmployee(widget.token, rowsPerPage, pageNumber),
+      future: ApiCall()
+          .getAllEmployee(widget.token, rowsPerPage, pageNumber.toString()),
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.data == null) {
           return const Center(
@@ -105,7 +106,24 @@ class _FieldForceDataState extends State<FieldForceData> {
                         //     maxLines: 1,
                         //   ),
                         // ),
-                        const SizedBox(width: 10),
+                        pageNumber == 1
+                            ? Text('')
+                            : IconButton(
+                                onPressed: () {
+                                  pageNumber--;
+                                  setState(() {});
+                                  print(pageNumber);
+                                },
+                                icon: Icon(Icons.chevron_left),
+                              ),
+                        IconButton(
+                          onPressed: () {
+                            pageNumber++;
+                            setState(() {});
+                            print(pageNumber);
+                          },
+                          icon: Icon(Icons.chevron_right),
+                        ),
                         SizedBox(
                           width: 80,
                           height: 40,
@@ -115,7 +133,7 @@ class _FieldForceDataState extends State<FieldForceData> {
                               FilteringTextInputFormatter.digitsOnly
                             ],
                             onChanged: (val) {
-                              pageNumber = val;
+                              pageNumber = int.parse(val);
                             },
                             style: const TextStyle(color: Colors.white),
                             decoration: InputDecoration(

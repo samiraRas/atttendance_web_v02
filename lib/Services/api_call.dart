@@ -74,10 +74,12 @@ class ApiCall {
             webPosition: "center");
       } else {
         Fluttertoast.showToast(
-            backgroundColor: Colors.red,
-            msg: 'Failed',
-            toastLength: Toast.LENGTH_SHORT,
-            webPosition: "center");
+          backgroundColor: Colors.red,
+          webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
+          msg: response.reasonPhrase.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          webPosition: "center",
+        );
       }
     });
   }
@@ -258,10 +260,12 @@ class ApiCall {
             webPosition: "center");
       } else {
         Fluttertoast.showToast(
-            backgroundColor: Colors.red,
-            msg: 'Failed',
-            toastLength: Toast.LENGTH_SHORT,
-            webPosition: "center");
+          backgroundColor: Colors.red,
+          webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
+          msg: response.reasonPhrase.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          webPosition: "center",
+        );
       }
     });
   }
@@ -286,10 +290,12 @@ class ApiCall {
             webPosition: "center");
       } else {
         Fluttertoast.showToast(
-            backgroundColor: Colors.red,
-            msg: 'Failed',
-            toastLength: Toast.LENGTH_SHORT,
-            webPosition: "center");
+          backgroundColor: Colors.red,
+          webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
+          msg: response.reasonPhrase.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          webPosition: "center",
+        );
       }
     });
   }

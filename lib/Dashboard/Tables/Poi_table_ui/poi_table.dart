@@ -130,23 +130,24 @@ class _PoiTableDataState extends State<PoiTableData> {
                           // const SizedBox(width: 10),
 
                           // Arrows Instead Of TextField Page Number
-                          // pageNumber == 1
-                          //     ? Text('')
-                          //     : IconButton(
-                          //         onPressed: () {
-                          //           pageNumber--;
-                          //           setState(() {});
-                          //         },
-                          //         icon: Icon(Icons.chevron_left),
-                          //       ),
-                          // IconButton(
-                          //   onPressed: () {
-                          //     pageNumber++;
-                          //     setState(() {});
-                          //     print(pageNumber);
-                          //   },
-                          //   icon: Icon(Icons.chevron_right),
-                          // ),
+                          pageNumber == 1
+                              ? Text('')
+                              : IconButton(
+                                  onPressed: () {
+                                    pageNumber--;
+                                    setState(() {});
+                                    print(pageNumber);
+                                  },
+                                  icon: Icon(Icons.chevron_left),
+                                ),
+                          IconButton(
+                            onPressed: () {
+                              pageNumber++;
+                              setState(() {});
+                              print(pageNumber);
+                            },
+                            icon: Icon(Icons.chevron_right),
+                          ),
                           SizedBox(
                             width: 80,
                             height: 40,
@@ -170,10 +171,11 @@ class _PoiTableDataState extends State<PoiTableData> {
                           ),
                           const SizedBox(width: 10),
                           ElevatedButton(
-                              onPressed: () {
-                                setState(() {});
-                              },
-                              child: const Text("Go To")),
+                            onPressed: () {
+                              setState(() {});
+                            },
+                            child: const Text("Go To"),
+                          ),
                         ],
                       ),
                     ),
