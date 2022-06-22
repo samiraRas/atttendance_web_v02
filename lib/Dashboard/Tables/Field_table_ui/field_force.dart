@@ -116,6 +116,7 @@ class _FieldForceDataState extends State<FieldForceData> {
                                 },
                                 icon: Icon(Icons.chevron_left),
                               ),
+                        Text("Page : ${pageNumber.toString()}"),
                         IconButton(
                           onPressed: () {
                             pageNumber++;

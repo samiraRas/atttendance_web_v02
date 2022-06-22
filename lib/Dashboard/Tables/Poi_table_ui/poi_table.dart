@@ -25,7 +25,7 @@ class _PoiTableDataState extends State<PoiTableData> {
   ScrollController scrollController = ScrollController();
   // int rowsPerPage = 5;
   String rowsPerPage = '50';
-  var pageNumber = 1;
+  int pageNumber = 1;
   // var rowNumber = 0;
   bool _isVisible = true;
   // List<int> row123 = [5, 8, 10, 12];
@@ -140,6 +140,7 @@ class _PoiTableDataState extends State<PoiTableData> {
                                   },
                                   icon: Icon(Icons.chevron_left),
                                 ),
+                          Text("Page : ${pageNumber.toString()}"),
                           IconButton(
                             onPressed: () {
                               pageNumber++;
@@ -218,6 +219,12 @@ class _PoiTableDataState extends State<PoiTableData> {
       ),
       DataColumn(
         label: Text(
+          "Mobile",
+          style: Theme.of(context).textTheme.subtitle2,
+        ),
+      ),
+      DataColumn(
+        label: Text(
           "Market",
           style: Theme.of(context).textTheme.subtitle2,
         ),
@@ -283,6 +290,7 @@ class TableRow extends DataTableSource {
   DataRow? getRow(int index) {
     var poiID = (poiData[index].poiId);
     var poiType = (poiData[index].poiType);
+    var mobile = (poiData[index].mobile);
     var union = (poiData[index].union);
     var thana = (poiData[index].thana);
     var district = (poiData[index].district);
@@ -299,6 +307,7 @@ class TableRow extends DataTableSource {
       cells: [
         DataCell(Center(child: Text((poiData[index].poiId)))),
         DataCell(Center(child: Text(poiData[index].poiType))),
+        DataCell(Center(child: Text(poiData[index].mobile))),
         DataCell(Center(child: Text(poiData[index].market))),
         DataCell(Center(child: Text(poiData[index].territory))),
         DataCell(Center(child: Text(poiData[index].area))),

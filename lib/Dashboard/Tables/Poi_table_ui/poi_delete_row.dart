@@ -82,11 +82,6 @@ class _PoiDeleteView extends State<PoiDeleteView> {
                                     // print(
                                     //     'token inside token ->${widget.token}');
                                     // print('poi id inside id ->${widget.id}');
-                                    Fluttertoast.showToast(
-                                        msg: 'Successfully Deleted ',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        webPosition: "center");
-
                                     Navigator.pop(context);
                                   },
                                 ),
