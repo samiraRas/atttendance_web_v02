@@ -67,7 +67,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       builder: (context, child) {
         return Theme(
           data: ThemeData(
-            primaryColor: Colors.white,
+            colorScheme: ColorScheme.dark(
+              primary: primaryColor,
+              surface: Color(0xff212332),
+            ),
+            dialogBackgroundColor: const Color(0xff2A2D3E),
           ), // This will change to light theme.
           child: child!,
         );
