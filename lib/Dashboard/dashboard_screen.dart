@@ -19,7 +19,9 @@ import 'Tables/Poi_table_ui/poi_add_row.dart';
 import 'Tables/Poi_table_ui/poi_table.dart';
 
 DateTime DT = DateTime.now();
-String dateSelected = DateFormat('dd-MM-yyyy').format(DT);
+DateTime Dt = DateTime.now();
+String dateFromSelected = DateFormat('dd-MM-yyyy').format(DT);
+String dateToSelected = DateFormat('dd-MM-yyyy').format(Dt);
 
 class DashboardScreen extends StatefulWidget {
   String? which_button = '';
@@ -38,7 +40,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   // String _searchResult = '';
 
   initialValue(String val) {
-    return TextEditingController(text: val);
+    return Text(val.toString());
   }
 
   String uploadFilename = "";
@@ -56,7 +58,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   //Date Time
-  pickDate() async {
+  pickFromDate() async {
     final newDate = await showDatePicker(
       context: context,
       initialDate: DT,
@@ -75,8 +77,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (newDate == null) return;
 
     DT = newDate;
-    dateSelected = DateFormat('dd-MM-yyyy').format(newDate);
+    dateFromSelected = DateFormat('dd-MM-yyyy').format(newDate);
     setState(() => DT = newDate);
+  }
+
+  pickToDate() async {
+    final newDate = await showDatePicker(
+      context: context,
+      initialDate: Dt,
+      firstDate: DateTime(DateTime.now().year - 100),
+      lastDate: DateTime(DateTime.now().year + 10),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData(
+            primaryColor: Colors.white,
+          ), // This will change to light theme.
+          child: child!,
+        );
+      },
+    );
+
+    if (newDate == null) return;
+
+    Dt = newDate;
+    dateToSelected = DateFormat('dd-MM-yyyy').format(newDate);
+    setState(() => Dt = newDate);
   }
 
   //Download CSv
@@ -446,37 +471,59 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 width: MediaQuery.of(context).size.width * 0.20,
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.10,
-                                child: TextField(
-                                  autofocus: false,
-                                  controller: initialValue(dateSelected),
-                                  focusNode: AlwaysDisabledFocusNode(),
-                                  style: const TextStyle(color: Colors.black),
-                                  textAlign: TextAlign.center,
-                                  decoration: InputDecoration(
-                                    fillColor: Colors.white,
-                                    filled: true,
-                                    hintText: 'Start Date',
-                                    contentPadding: const EdgeInsets.all(5.0),
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0)),
-                                    suffixIcon: const Icon(
-                                      Icons.date_range_rounded,
-                                      color: Colors.blueAccent,
-                                      size: 30.0,
-                                    ),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  child: Row(
+                                    children: [
+                                      Text('From : '),
+                                      initialValue(dateFromSelected),
+                                      IconButton(
+                                        onPressed: () {
+                                          pickFromDate();
+                                        },
+                                        icon: Icon(Icons.date_range_outlined),
+                                      ),
+                                      Text(' --  To : '),
+                                      initialValue(dateToSelected),
+                                      IconButton(
+                                        onPressed: () {
+                                          pickToDate();
+                                        },
+                                        icon: Icon(Icons.date_range_outlined),
+                                      ),
+                                    ],
+                                  )
+
+                                  // TextField(
+                                  //   autofocus: false,
+                                  //   controller: initialValue(dateSelected),
+                                  //   focusNode: AlwaysDisabledFocusNode(),
+                                  //   style: const TextStyle(color: Colors.black),
+                                  //   textAlign: TextAlign.center,
+                                  //   decoration: InputDecoration(
+                                  //     fillColor: Colors.white,
+                                  //     filled: true,
+                                  //     hintText: 'Start Date',
+                                  //     contentPadding: const EdgeInsets.all(5.0),
+                                  //     border: OutlineInputBorder(
+                                  //         borderRadius:
+                                  //             BorderRadius.circular(5.0)),
+                                  //     suffixIcon: const Icon(
+                                  //       Icons.date_range_rounded,
+                                  //       color: Colors.blueAccent,
+                                  //       size: 30.0,
+                                  //     ),
+                                  //   ),
+                                  //   onChanged: (String value) {
+                                  //     setState(() {});
+                                  //     dateSelected = value;
+                                  //     //dateSelected;
+                                  //   },
+                                  //   onTap: () {
+                                  //     pickDate();
+                                  //   },
+                                  // ),
                                   ),
-                                  onChanged: (String value) {
-                                    setState(() {});
-                                    dateSelected = value;
-                                    //dateSelected;
-                                  },
-                                  onTap: () {
-                                    pickDate();
-                                  },
-                                ),
-                              ),
                             ],
                           ),
 
