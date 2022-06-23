@@ -103,6 +103,7 @@ class PoiDataModel {
     required this.cid,
     required this.poiId,
     required this.poiType,
+    required this.mobile,
     required this.union,
     required this.thana,
     required this.district,
@@ -124,6 +125,7 @@ class PoiDataModel {
   String cid;
   String poiId;
   String poiType;
+  String mobile;
   String union;
   String thana;
   String district;
@@ -145,6 +147,7 @@ class PoiDataModel {
         cid: json["cid"],
         poiId: json["poiId"],
         poiType: json["poiType"],
+        mobile: json["mobile"],
         union: json["union"],
         thana: json["thana"],
         district: json["district"],

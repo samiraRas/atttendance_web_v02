@@ -74,10 +74,12 @@ class ApiCall {
             webPosition: "center");
       } else {
         Fluttertoast.showToast(
-            backgroundColor: Colors.red,
-            msg: 'Failed',
-            toastLength: Toast.LENGTH_SHORT,
-            webPosition: "center");
+          backgroundColor: Colors.red,
+          webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
+          msg: response.reasonPhrase.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          webPosition: "center",
+        );
       }
     });
   }
@@ -88,6 +90,7 @@ class ApiCall {
     String cid,
     poiId,
     poiType,
+    mobile,
     union,
     thana,
     district,
@@ -110,6 +113,7 @@ class ApiCall {
         "cid": cid,
         "poiId": poiId,
         "poiType": poiType,
+        "mobile": mobile,
         "union": union,
         "thana": thana,
         "district": district,
@@ -202,8 +206,19 @@ class ApiCall {
 
     if (response.statusCode == 201) {
       var data = json.decode(response.body);
-
+      Fluttertoast.showToast(
+          msg: 'Successfully Uploaded ',
+          toastLength: Toast.LENGTH_SHORT,
+          webPosition: "center");
       return data;
+    } else {
+      Fluttertoast.showToast(
+        backgroundColor: Colors.red,
+        webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
+        msg: response.body,
+        toastLength: Toast.LENGTH_SHORT,
+        webPosition: "center",
+      );
     }
   }
 //  *************************************************************************************************
@@ -258,10 +273,12 @@ class ApiCall {
             webPosition: "center");
       } else {
         Fluttertoast.showToast(
-            backgroundColor: Colors.red,
-            msg: 'Failed',
-            toastLength: Toast.LENGTH_SHORT,
-            webPosition: "center");
+          backgroundColor: Colors.red,
+          webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
+          msg: response.reasonPhrase.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          webPosition: "center",
+        );
       }
     });
   }
@@ -286,10 +303,12 @@ class ApiCall {
             webPosition: "center");
       } else {
         Fluttertoast.showToast(
-            backgroundColor: Colors.red,
-            msg: 'Failed',
-            toastLength: Toast.LENGTH_SHORT,
-            webPosition: "center");
+          backgroundColor: Colors.red,
+          webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
+          msg: response.reasonPhrase.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          webPosition: "center",
+        );
       }
     });
   }
@@ -349,10 +368,19 @@ class ApiCall {
 
     if (response.statusCode == 201) {
       var data = json.decode(response.body);
-
+      Fluttertoast.showToast(
+          msg: 'Successfully Uploaded ',
+          toastLength: Toast.LENGTH_SHORT,
+          webPosition: "center");
       return data;
     } else {
-      return " Erorr";
+      Fluttertoast.showToast(
+        backgroundColor: Colors.red,
+        webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
+        msg: response.body,
+        toastLength: Toast.LENGTH_SHORT,
+        webPosition: "center",
+      );
     }
   }
 

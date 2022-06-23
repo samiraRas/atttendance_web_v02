@@ -29,7 +29,7 @@ class FieldForceData extends StatefulWidget {
 class _FieldForceDataState extends State<FieldForceData> {
   ScrollController scrollController = ScrollController();
   var rowsPerPage = "50";
-  var pageNumber = 1;
+  int pageNumber = 1;
 
   //Employee Poi Add Row
   TextEditingController emplopyeeIdController = TextEditingController();
@@ -109,23 +109,24 @@ class _FieldForceDataState extends State<FieldForceData> {
                         //   ),
                         // ),
                         pageNumber == 1
-                            ? const Text('')
+                            ? Text('')
                             : IconButton(
                                 onPressed: () {
                                   pageNumber--;
                                   setState(() {});
+                                  print(pageNumber);
                                 },
-                                icon: const Icon(Icons.chevron_left),
+                                icon: Icon(Icons.chevron_left),
                               ),
+                        Text("Page : ${pageNumber.toString()}"),
                         IconButton(
                           onPressed: () {
                             pageNumber++;
                             setState(() {});
                             print(pageNumber);
                           },
-                          icon: const Icon(Icons.chevron_right),
+                          icon: Icon(Icons.chevron_right),
                         ),
-                        const SizedBox(width: 10),
                         SizedBox(
                           width: 80,
                           height: 40,

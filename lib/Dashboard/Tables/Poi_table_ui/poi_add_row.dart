@@ -20,6 +20,7 @@ class _PopupView extends State<PopupView> {
   //Conreollers
   TextEditingController cidController = TextEditingController();
   TextEditingController poiIdController = TextEditingController();
+  TextEditingController mobileController = TextEditingController();
   TextEditingController poiTypeController = TextEditingController();
   TextEditingController unionController = TextEditingController();
   TextEditingController thanaController = TextEditingController();
@@ -38,6 +39,7 @@ class _PopupView extends State<PopupView> {
     cidController.dispose();
     poiIdController.dispose();
     poiTypeController.dispose();
+    mobileController.dispose();
     unionController.dispose();
     thanaController.dispose();
     districtController.dispose();
@@ -80,6 +82,16 @@ class _PopupView extends State<PopupView> {
                           child: TextFormPopup(
                             controller: poiIdController,
                             labelText: 'PoiId',
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormPopup(
+                            controller: mobileController,
+                            labelText: 'Mobile Number',
                           ),
                         ),
                       ],
@@ -215,6 +227,7 @@ class _PopupView extends State<PopupView> {
                               if (cidController.text != '' &&
                                   poiIdController.text != '' &&
                                   poiTypeController.text != '' &&
+                                  mobileController.text != '' &&
                                   unionController.text != '' &&
                                   thanaController.text != '' &&
                                   districtController.text != '' &&
@@ -231,6 +244,7 @@ class _PopupView extends State<PopupView> {
                                   cidController.text,
                                   poiIdController.text,
                                   poiTypeController.text,
+                                  mobileController.text,
                                   unionController.text,
                                   thanaController.text,
                                   districtController.text,

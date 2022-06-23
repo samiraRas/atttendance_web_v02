@@ -11,11 +11,15 @@ import 'package:flutter/material.dart';
 import 'package:attendance_app/widgets/responsive_login.dart';
 import 'package:attendance_app/Services/constants.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'Tables/Attendance_table_ui/attendence_table.dart';
 import 'Tables/Field_table_ui/field_force.dart';
 import 'Tables/Field_table_ui/filed_add_row.dart';
 import 'Tables/Poi_table_ui/poi_add_row.dart';
 import 'Tables/Poi_table_ui/poi_table.dart';
+
+DateTime DT = DateTime.now();
+String dateSelected = DateFormat('dd-MM-yyyy').format(DT);
 
 class DashboardScreen extends StatefulWidget {
   String? which_button = '';
@@ -33,6 +37,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   // TextEditingController controller = TextEditingController();
   // String _searchResult = '';
 
+  initialValue(String val) {
+    return TextEditingController(text: val);
+  }
+
   String uploadFilename = "";
   Uint8List? csvFile;
 
@@ -45,6 +53,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // print('dash screen is carrying the token: ${widget.token}');
 
     super.initState();
+  }
+
+  //Date Time
+  pickDate() async {
+    final newDate = await showDatePicker(
+      context: context,
+      initialDate: DT,
+      firstDate: DateTime(DateTime.now().year - 100),
+      lastDate: DateTime(DateTime.now().year + 10),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData(
+            primaryColor: Colors.white,
+          ), // This will change to light theme.
+          child: child!,
+        );
+      },
+    );
+
+    if (newDate == null) return;
+
+    DT = newDate;
+    dateSelected = DateFormat('dd-MM-yyyy').format(newDate);
+    setState(() => DT = newDate);
   }
 
   //Download CSv
@@ -368,21 +400,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
 
 // ***********************************************************************************
-// **********************ADD ROW UI**********************************
-// *************************************************************************
-// *************************************************************************
+// **********************ADD ROW UI***************************************************
+// ***********************************************************************************
+// ***********************************************************************************
 
                 widget.which_button == "POI Table"
                     ? ElevatedButton(
                         onPressed: () {
                           showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return PopupView(
-                                  token: widget.token,
-                                  refresh: Refresh,
-                                );
-                              });
+                            context: context,
+                            builder: (BuildContext context) {
+                              return PopupView(
+                                token: widget.token,
+                                refresh: Refresh,
+                              );
+                            },
+                          );
                         },
                         child: const Text(
                           " + Add Row",
@@ -393,20 +426,59 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ? ElevatedButton(
                             onPressed: () {
                               showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return FieldPopupView(
-                                      token: widget.token,
-                                      refresh: Refresh,
-                                    );
-                                  });
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return FieldPopupView(
+                                    token: widget.token,
+                                    refresh: Refresh,
+                                  );
+                                },
+                              );
                             },
                             child: const Text(
                               " + Add Row",
                               style: TextStyle(fontSize: 15),
                             ),
                           )
-                        : const Text(''),
+                        : Row(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.20,
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.10,
+                                child: TextField(
+                                  autofocus: false,
+                                  controller: initialValue(dateSelected),
+                                  focusNode: AlwaysDisabledFocusNode(),
+                                  style: const TextStyle(color: Colors.black),
+                                  textAlign: TextAlign.center,
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    hintText: 'Start Date',
+                                    contentPadding: const EdgeInsets.all(5.0),
+                                    border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)),
+                                    suffixIcon: const Icon(
+                                      Icons.date_range_rounded,
+                                      color: Colors.blueAccent,
+                                      size: 30.0,
+                                    ),
+                                  ),
+                                  onChanged: (String value) {
+                                    setState(() {});
+                                    dateSelected = value;
+                                    //dateSelected;
+                                  },
+                                  onTap: () {
+                                    pickDate();
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
 
                 // Row(
                 //   children: [
@@ -752,4 +824,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       // User canceled the picker
     }
   }
+}
+
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
 }

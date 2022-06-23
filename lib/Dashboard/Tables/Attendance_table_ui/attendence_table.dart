@@ -92,9 +92,11 @@ class _AttendenceTableDataState extends State<AttendenceTableData> {
                                   onPressed: () {
                                     pageNumber--;
                                     setState(() {});
+                                    print(pageNumber);
                                   },
                                   icon: Icon(Icons.chevron_left),
                                 ),
+                          Text("Page : ${pageNumber.toString()}"),
                           IconButton(
                             onPressed: () {
                               pageNumber++;
@@ -103,7 +105,6 @@ class _AttendenceTableDataState extends State<AttendenceTableData> {
                             },
                             icon: Icon(Icons.chevron_right),
                           ),
-                          const SizedBox(width: 10),
                           SizedBox(
                             width: 80,
                             height: 40,
@@ -209,6 +210,12 @@ class _AttendenceTableDataState extends State<AttendenceTableData> {
           style: Theme.of(context).textTheme.subtitle2,
         ),
       ),
+      DataColumn(
+        label: Text(
+          "Details",
+          style: Theme.of(context).textTheme.subtitle2,
+        ),
+      ),
     ];
   }
 }
@@ -218,13 +225,16 @@ class TableRow extends DataTableSource {
 
   String token;
   Function refresh;
+  BuildContext? context;
   final DateFormat dtformat = DateFormat('dd-MM-yyyy');
   final DateFormat tmformat = DateFormat('hh-mm-ss');
 
-  TableRow(
-      {required this.attendanceData,
-      required this.token,
-      required this.refresh});
+  TableRow({
+    required this.attendanceData,
+    required this.token,
+    required this.refresh,
+    this.context,
+  });
 
   @override
   DataRow? getRow(int index) {
@@ -255,6 +265,22 @@ class TableRow extends DataTableSource {
                 Text(dtformat.format(attendanceData[index].attendanceDate)))),
         DataCell(
             Center(child: Text(attendanceData[index].distance.toString()))),
+        DataCell(Center(
+            child: TextButton(
+                onPressed: () {
+                  showDialog(
+                    context: context!,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: bgColor,
+                        content: SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.45,
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: const Text('details')))),
       ],
     );
   }
