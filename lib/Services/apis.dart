@@ -18,6 +18,9 @@ class ApiList {
   static String singleEmployeeAddApi =
       'http://$_ip:$_port/api/v1/user/register';
 
+  static String employeePoiDelete(String id) =>
+      'http://$_ip:$_port/api/v1/user/employee-poi-delete/$id';
+
   static String getemployeePoiApi(String rowsPerPage, String pageNumber) =>
       'http://$_ip:$_port/api/v1/poiUser/user-poi-list/$rowsPerPage/$pageNumber';
 

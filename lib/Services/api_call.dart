@@ -70,14 +70,14 @@ class ApiCall {
       if (response.statusCode == 200) {
         Fluttertoast.showToast(
             msg: 'Successfully Uploaded ',
-            toastLength: Toast.LENGTH_SHORT,
+            toastLength: Toast.LENGTH_LONG,
             webPosition: "center");
       } else {
         Fluttertoast.showToast(
           backgroundColor: Colors.red,
           webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
           msg: response.reasonPhrase.toString(),
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           webPosition: "center",
         );
       }
@@ -133,14 +133,12 @@ class ApiCall {
       var data = json.decode(response.body);
       Fluttertoast.showToast(
           msg: 'Successfully Submitted ',
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           webPosition: "center");
       return data;
     } else {
       Fluttertoast.showToast(
-          msg: 'Failed',
-          toastLength: Toast.LENGTH_SHORT,
-          webPosition: "center");
+          msg: 'Failed', toastLength: Toast.LENGTH_LONG, webPosition: "center");
     }
 
     return "Null";
@@ -208,7 +206,7 @@ class ApiCall {
       var data = json.decode(response.body);
       Fluttertoast.showToast(
           msg: 'Successfully Uploaded ',
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           webPosition: "center");
       return data;
     } else {
@@ -216,7 +214,7 @@ class ApiCall {
         backgroundColor: Colors.red,
         webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
         msg: response.body,
-        toastLength: Toast.LENGTH_SHORT,
+        toastLength: Toast.LENGTH_LONG,
         webPosition: "center",
       );
     }
@@ -269,14 +267,14 @@ class ApiCall {
       if (response.statusCode == 200) {
         Fluttertoast.showToast(
             msg: 'Successfully Uploaded ',
-            toastLength: Toast.LENGTH_SHORT,
+            toastLength: Toast.LENGTH_LONG,
             webPosition: "center");
       } else {
         Fluttertoast.showToast(
           backgroundColor: Colors.red,
           webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
           msg: response.reasonPhrase.toString(),
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           webPosition: "center",
         );
       }
@@ -299,14 +297,14 @@ class ApiCall {
       if (response.statusCode == 200) {
         Fluttertoast.showToast(
             msg: 'Successfully Uploaded ',
-            toastLength: Toast.LENGTH_SHORT,
+            toastLength: Toast.LENGTH_LONG,
             webPosition: "center");
       } else {
         Fluttertoast.showToast(
           backgroundColor: Colors.red,
           webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
           msg: response.reasonPhrase.toString(),
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           webPosition: "center",
         );
       }
@@ -370,7 +368,7 @@ class ApiCall {
       var data = json.decode(response.body);
       Fluttertoast.showToast(
           msg: 'Successfully Uploaded ',
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           webPosition: "center");
       return data;
     } else {
@@ -378,7 +376,7 @@ class ApiCall {
         backgroundColor: Colors.red,
         webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
         msg: response.body,
-        toastLength: Toast.LENGTH_SHORT,
+        toastLength: Toast.LENGTH_LONG,
         webPosition: "center",
       );
     }
@@ -427,14 +425,12 @@ class ApiCall {
       var data = json.decode(response.body);
       Fluttertoast.showToast(
           msg: 'Successfully Submitted ',
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           webPosition: "center");
       return data;
     } else {
       Fluttertoast.showToast(
-          msg: 'Failed',
-          toastLength: Toast.LENGTH_SHORT,
-          webPosition: "center");
+          msg: 'Failed', toastLength: Toast.LENGTH_LONG, webPosition: "center");
     }
 
     return "Null";
@@ -462,14 +458,12 @@ class ApiCall {
       var data = json.decode(response.body);
       Fluttertoast.showToast(
           msg: 'Successfully Submitted ',
-          toastLength: Toast.LENGTH_SHORT,
+          toastLength: Toast.LENGTH_LONG,
           webPosition: "center");
       return data;
     } else {
       Fluttertoast.showToast(
-          msg: 'Failed',
-          toastLength: Toast.LENGTH_SHORT,
-          webPosition: "center");
+          msg: 'Failed', toastLength: Toast.LENGTH_LONG, webPosition: "center");
     }
 
     return "Null";
@@ -526,6 +520,34 @@ class ApiCall {
       // }
     } else {
       print("message failed");
+    }
+  }
+
+  Future delEmpPoi(String token, String id, cid, poiId) async {
+    final response = await http.delete(Uri.parse(ApiList.employeePoiDelete(id)),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode(<String, String>{
+          "cid": cid,
+          "poiId": poiId,
+        }));
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      Fluttertoast.showToast(
+          msg: 'Successfully Uploaded ',
+          toastLength: Toast.LENGTH_LONG,
+          webPosition: "center");
+      return data;
+    } else {
+      Fluttertoast.showToast(
+        backgroundColor: Colors.red,
+        webBgColor: "linear-gradient(to right, #F44336FF, #F44336FF)",
+        msg: response.body,
+        toastLength: Toast.LENGTH_LONG,
+        webPosition: "center",
+      );
     }
   }
 }

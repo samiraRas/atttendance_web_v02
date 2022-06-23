@@ -67,7 +67,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       builder: (context, child) {
         return Theme(
           data: ThemeData(
-            primaryColor: Colors.white,
+            colorScheme: ColorScheme.dark(
+              primary: primaryColor,
+              surface: Color(0xff212332),
+            ),
+            dialogBackgroundColor: const Color(0xff2A2D3E),
           ), // This will change to light theme.
           child: child!,
         );
@@ -465,73 +469,145 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               style: TextStyle(fontSize: 15),
                             ),
                           )
-                        : Row(
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.20,
-                              ),
-                              SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.25,
-                                  child: Row(
-                                    children: [
-                                      Text('From : '),
-                                      initialValue(dateFromSelected),
-                                      IconButton(
-                                        onPressed: () {
-                                          pickFromDate();
-                                        },
-                                        icon: Icon(
-                                          Icons.date_range_outlined,
-                                          color: primaryColor,
-                                        ),
-                                      ),
-                                      Text(' --  To : '),
-                                      initialValue(dateToSelected),
-                                      IconButton(
-                                        onPressed: () {
-                                          pickToDate();
-                                        },
-                                        icon: Icon(
-                                          Icons.date_range_outlined,
-                                          color: primaryColor,
-                                        ),
-                                      ),
-                                    ],
-                                  )
-
-                                  // TextField(
-                                  //   autofocus: false,
-                                  //   controller: initialValue(dateSelected),
-                                  //   focusNode: AlwaysDisabledFocusNode(),
-                                  //   style: const TextStyle(color: Colors.black),
-                                  //   textAlign: TextAlign.center,
-                                  //   decoration: InputDecoration(
-                                  //     fillColor: Colors.white,
-                                  //     filled: true,
-                                  //     hintText: 'Start Date',
-                                  //     contentPadding: const EdgeInsets.all(5.0),
-                                  //     border: OutlineInputBorder(
-                                  //         borderRadius:
-                                  //             BorderRadius.circular(5.0)),
-                                  //     suffixIcon: const Icon(
-                                  //       Icons.date_range_rounded,
-                                  //       color: Colors.blueAccent,
-                                  //       size: 30.0,
-                                  //     ),
-                                  //   ),
-                                  //   onChanged: (String value) {
-                                  //     setState(() {});
-                                  //     dateSelected = value;
-                                  //     //dateSelected;
-                                  //   },
-                                  //   onTap: () {
-                                  //     pickDate();
-                                  //   },
-                                  // ),
+                        : ResponsiveWidget.isLargeScreen(context)
+                            ? Row(
+                                children: [
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.20,
                                   ),
-                            ],
-                          ),
+                                  SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.25,
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Row(
+                                          children: [
+                                            Text('From : '),
+                                            initialValue(dateFromSelected),
+                                            IconButton(
+                                              onPressed: () {
+                                                pickFromDate();
+                                              },
+                                              icon: const Icon(
+                                                Icons.date_range_outlined,
+                                                color: primaryColor,
+                                              ),
+                                            ),
+                                            Text(' --  To : '),
+                                            initialValue(dateToSelected),
+                                            IconButton(
+                                              onPressed: () {
+                                                pickToDate();
+                                              },
+                                              icon: const Icon(
+                                                Icons.date_range_outlined,
+                                                color: primaryColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+
+                                      // TextField(
+                                      //   autofocus: false,
+                                      //   controller: initialValue(dateSelected),
+                                      //   focusNode: AlwaysDisabledFocusNode(),
+                                      //   style: const TextStyle(color: Colors.black),
+                                      //   textAlign: TextAlign.center,
+                                      //   decoration: InputDecoration(
+                                      //     fillColor: Colors.white,
+                                      //     filled: true,
+                                      //     hintText: 'Start Date',
+                                      //     contentPadding: const EdgeInsets.all(5.0),
+                                      //     border: OutlineInputBorder(
+                                      //         borderRadius:
+                                      //             BorderRadius.circular(5.0)),
+                                      //     suffixIcon: const Icon(
+                                      //       Icons.date_range_rounded,
+                                      //       color: Colors.blueAccent,
+                                      //       size: 30.0,
+                                      //     ),
+                                      //   ),
+                                      //   onChanged: (String value) {
+                                      //     setState(() {});
+                                      //     dateSelected = value;
+                                      //     //dateSelected;
+                                      //   },
+                                      //   onTap: () {
+                                      //     pickDate();
+                                      //   },
+                                      // ),
+                                      ),
+                                ],
+                              )
+                            : Row(
+                                children: [
+                                  SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.45,
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Row(
+                                          children: [
+                                            Text('From : '),
+                                            initialValue(dateFromSelected),
+                                            IconButton(
+                                              onPressed: () {
+                                                pickFromDate();
+                                              },
+                                              icon: const Icon(
+                                                Icons.date_range_outlined,
+                                                color: primaryColor,
+                                              ),
+                                            ),
+                                            Text(' --  To : '),
+                                            initialValue(dateToSelected),
+                                            IconButton(
+                                              onPressed: () {
+                                                pickToDate();
+                                              },
+                                              icon: const Icon(
+                                                Icons.date_range_outlined,
+                                                color: primaryColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+
+                                      // TextField(
+                                      //   autofocus: false,
+                                      //   controller: initialValue(dateSelected),
+                                      //   focusNode: AlwaysDisabledFocusNode(),
+                                      //   style: const TextStyle(color: Colors.black),
+                                      //   textAlign: TextAlign.center,
+                                      //   decoration: InputDecoration(
+                                      //     fillColor: Colors.white,
+                                      //     filled: true,
+                                      //     hintText: 'Start Date',
+                                      //     contentPadding: const EdgeInsets.all(5.0),
+                                      //     border: OutlineInputBorder(
+                                      //         borderRadius:
+                                      //             BorderRadius.circular(5.0)),
+                                      //     suffixIcon: const Icon(
+                                      //       Icons.date_range_rounded,
+                                      //       color: Colors.blueAccent,
+                                      //       size: 30.0,
+                                      //     ),
+                                      //   ),
+                                      //   onChanged: (String value) {
+                                      //     setState(() {});
+                                      //     dateSelected = value;
+                                      //     //dateSelected;
+                                      //   },
+                                      //   onTap: () {
+                                      //     pickDate();
+                                      //   },
+                                      // ),
+                                      ),
+                                ],
+                              ),
 
                 // Row(
                 //   children: [

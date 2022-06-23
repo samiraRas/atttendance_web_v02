@@ -1,7 +1,3 @@
-// // To parse this JSON data, do
-// //
-// //     final empPoiDataModel = empPoiDataModelFromJson(jsonString);
-
 // import 'package:meta/meta.dart';
 // import 'dart:convert';
 
@@ -17,6 +13,7 @@
 //     required this.id,
 //     required this.cid,
 //     required this.employeeId,
+//     required this.employeeObjId,
 //     required this.poiIds,
 //     required this.createdBy,
 //     required this.createdAt,
@@ -27,6 +24,7 @@
 //   String id;
 //   String cid;
 //   String employeeId;
+//   String employeeObjId;
 //   List<PoiId> poiIds;
 //   String createdBy;
 //   DateTime createdAt;
@@ -38,7 +36,9 @@
 //         id: json["_id"],
 //         cid: json["cid"],
 //         employeeId: json["employeeId"],
-//         poiIds: List<PoiId>.from(json["poiIds"].map((x) => PoiId.fromJson(x))),
+//         employeeObjId: json["employeeObjId"],
+//         poiIds: List<PoiId>.from(
+//             json["poiIds"].map((x) => x == null ? null : PoiId.fromJson(x))),
 //         createdBy: json["createdBy"],
 //         createdAt: DateTime.parse(json["createdAt"]),
 //         updatedAt: DateTime.parse(json["updatedAt"]),
@@ -49,7 +49,9 @@
 //         "_id": id,
 //         "cid": cid,
 //         "employeeId": employeeId,
-//         "poiIds": List<dynamic>.from(poiIds.map((x) => x.toJson())),
+//         "employeeObjId": employeeObjId,
+//         "poiIds": List<dynamic>.from(
+//             poiIds.map((x) => x == null ? null : x.toJson())),
 //         "createdBy": createdBy,
 //         "createdAt": createdAt.toIso8601String(),
 //         "updatedAt": updatedAt.toIso8601String(),
@@ -127,8 +129,7 @@ class EmpPoiDataModel {
         cid: json["cid"],
         employeeId: json["employeeId"],
         employeeObjId: json["employeeObjId"],
-        poiIds: List<PoiId>.from(
-            json["poiIds"].map((x) => x == null ? null : PoiId.fromJson(x))),
+        poiIds: List<PoiId>.from(json["poiIds"].map((x) => PoiId.fromJson(x))),
         createdBy: json["createdBy"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
@@ -140,8 +141,7 @@ class EmpPoiDataModel {
         "cid": cid,
         "employeeId": employeeId,
         "employeeObjId": employeeObjId,
-        "poiIds": List<dynamic>.from(
-            poiIds.map((x) => x == null ? null : x.toJson())),
+        "poiIds": List<dynamic>.from(poiIds.map((x) => x.toJson())),
         "createdBy": createdBy,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
