@@ -481,7 +481,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         onPressed: () {
                                           pickFromDate();
                                         },
-                                        icon: Icon(Icons.date_range_outlined),
+                                        icon: Icon(
+                                          Icons.date_range_outlined,
+                                          color: primaryColor,
+                                        ),
                                       ),
                                       Text(' --  To : '),
                                       initialValue(dateToSelected),
@@ -489,7 +492,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         onPressed: () {
                                           pickToDate();
                                         },
-                                        icon: Icon(Icons.date_range_outlined),
+                                        icon: Icon(
+                                          Icons.date_range_outlined,
+                                          color: primaryColor,
+                                        ),
                                       ),
                                     ],
                                   )

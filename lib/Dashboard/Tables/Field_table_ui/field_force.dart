@@ -411,40 +411,73 @@ class TableRow extends DataTableSource {
                               ],
                             ),
 
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  FutureBuilder(
-                                      future: ApiCall().getAllEmployeePoi(token,
-                                          rowsPerPage, pageNumber.toString()),
-                                      builder:
-                                          (context, AsyncSnapshot snapshot) {
-                                        if (snapshot.data == null) {
-                                          return const Center(
-                                            child: Text("loading......"),
-                                          );
-                                        } else if (snapshot.hasData) {
-                                          print(
-                                              'showing snapshot ${snapshot.data}');
-                                          snapshot.data
-                                              as List<EmpPoiDataModel>;
-                                          return DataTable(
-                                            columns: const <DataColumn>[
-                                              DataColumn(label: Text("POI ID")),
-                                              DataColumn(
-                                                  label: Text("POI Name")),
-                                              DataColumn(label: Text("Action"))
-                                            ],
-                                            rows: _createRows,
-                                          );
-                                        } else {
-                                          return const Text(
-                                              'Something is wrong');
-                                        }
-                                      }),
-                                ],
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    FutureBuilder(
+                                        future: ApiCall().getAllEmployeePoi(
+                                            token,
+                                            rowsPerPage,
+                                            pageNumber.toString()),
+                                        builder:
+                                            (context, AsyncSnapshot snapshot) {
+                                          if (snapshot.data == null) {
+                                            return const Center(
+                                              child: Text("loading......"),
+                                            );
+                                          } else if (snapshot.hasData) {
+                                            print(
+                                                'showing snapshot ${snapshot.data}');
+                                            snapshot.data
+                                                as List<EmpPoiDataModel>;
+                                            return DataTable(
+                                              columns: const <DataColumn>[
+                                                DataColumn(
+                                                    label: Text("POI ID")),
+                                                DataColumn(
+                                                    label: Text("POI Name")),
+                                                DataColumn(
+                                                    label: Text("Action"))
+                                              ],
+                                              rows: List.generate(
+                                                snapshot.data.length,
+                                                (index) {
+                                                  var empPoi =
+                                                      snapshot.data[index];
+
+                                                  return DataRow(cells: [
+                                                    for (var i = 0;
+                                                        i <=
+                                                            empPoi
+                                                                .poiIds.length;
+                                                        i++)
+                                                      DataCell(
+                                                        Text(
+                                                            "${empPoi.poiIds.poiId}"),
+                                                      ),
+                                                    DataCell(
+                                                      Text(
+                                                        empPoi
+                                                            .poiIds.first.poiId,
+                                                      ),
+                                                    ),
+                                                    DataCell(
+                                                      Text(empPoi.employeeId),
+                                                    ),
+                                                  ]);
+                                                },
+                                              ),
+                                            );
+                                          } else {
+                                            return const Text(
+                                                'Something is wrong');
+                                          }
+                                        }),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
@@ -486,23 +519,29 @@ class TableRow extends DataTableSource {
     ]);
   }
 
-  List<DataRow> get _createRows {
-    return employeePoiList
-        .map((file) => DataRow(
-              cells: <DataCell>[
-                DataCell(
-                  Text(file.cid),
-                ),
-                DataCell(
-                  Text(file.poiIds.first.poiId),
-                ),
-                DataCell(
-                  Text(file.employeeId),
-                ),
-              ],
-            ))
-        .toList();
-  }
+  // List<DataRow> get _createRows {
+  //   return employeePoiList
+  //       .map((x) => DataRow(
+  //             cells: <DataCell>[
+  //               DataCell(
+  //                 Text(x.cid),
+  //               ),
+  //               x.poiIds.length > 0
+  //                   ? DataCell(
+  //                       Text(x.poiIds.first.poiId),
+  //                     )
+  //                   : DataCell(Text("No data")),
+  //               DataCell(
+  //                 Text(x.employeeId),
+  //               ),
+  //             ],
+  //           ))
+  //       .toList();
+  // }
+  // (attendanceData[index].poiId.length > 0)
+  //           ? DataCell(
+  //               Center(child: Text(attendanceData[index].poiId.first.poiId)))
+  //           : const DataCell(Center(child: Text('No PoiID'))),
 
   @override
   bool get isRowCountApproximate => false;

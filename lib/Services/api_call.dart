@@ -479,7 +479,7 @@ class ApiCall {
 
   Future getAllAttendance(
       String token, String rowsPerPage, String pageNumber) async {
-    print('getAllAttendance is getting token or not->${token}');
+    // print('getAllAttendance is getting token or not->${token}');
     // print('getAllAttendance is getting rowsperpage or not->${rowsPerPage}');
     // print('getAllAttendance is getting token or not->${pageNumber}');
 
@@ -505,6 +505,10 @@ class ApiCall {
   List<EmpPoiDataModel> employeePoiList = [];
   Future getAllEmployeePoi(
       String token, String rowsPerPage, String pageNumber) async {
+    print('getAllEmployeePoi is getting token or not->${token}');
+    print('getAllEmployeePoi is getting rowsperpage or not->${rowsPerPage}');
+    print('getAllEmployeePoi is getting pageNumber or not->${pageNumber}');
+
     final response = await http.get(
         Uri.parse(ApiList.getemployeePoiApi(rowsPerPage, pageNumber)),
         headers: <String, String>{
@@ -515,8 +519,11 @@ class ApiCall {
       List<EmpPoiDataModel> employeePoiList =
           empPoiDataModelFromJson(response.body);
       print('employeePoiList print-> ${employeePoiList}');
-
+      // if (employeePoiList == null) {
+      //   return;
+      // } else {
       return employeePoiList;
+      // }
     } else {
       print("message failed");
     }
