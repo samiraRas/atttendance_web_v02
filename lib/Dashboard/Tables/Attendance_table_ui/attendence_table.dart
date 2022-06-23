@@ -17,7 +17,7 @@ class AttendenceTableData extends StatefulWidget {
 class _AttendenceTableDataState extends State<AttendenceTableData> {
   ScrollController scrollController = ScrollController();
   String dataCount = '50';
-  var pageNumber = "1";
+  var pageNumber = 1;
 
   Refresh() {
     setState(() {});
@@ -31,7 +31,8 @@ class _AttendenceTableDataState extends State<AttendenceTableData> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: ApiCall().getAllAttendance(widget.token, dataCount, pageNumber),
+      future: ApiCall()
+          .getAllAttendance(widget.token, dataCount, pageNumber.toString()),
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.data == null) {
           return const Center(
@@ -85,13 +86,30 @@ class _AttendenceTableDataState extends State<AttendenceTableData> {
                           //     ],
                           //   ),
                           // ),
+                          pageNumber == 1
+                              ? Text('')
+                              : IconButton(
+                                  onPressed: () {
+                                    pageNumber--;
+                                    setState(() {});
+                                  },
+                                  icon: Icon(Icons.chevron_left),
+                                ),
+                          IconButton(
+                            onPressed: () {
+                              pageNumber++;
+                              setState(() {});
+                              print(pageNumber);
+                            },
+                            icon: Icon(Icons.chevron_right),
+                          ),
                           const SizedBox(width: 10),
                           SizedBox(
                             width: 80,
                             height: 40,
                             child: TextField(
                               onChanged: (val) {
-                                pageNumber = val;
+                                pageNumber = int.parse(val);
                               },
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.digitsOnly

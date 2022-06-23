@@ -1,4 +1,5 @@
 import 'package:attendance_app/Dashboard/Tables/Field_table_ui/field_edit_row.dart';
+import 'package:attendance_app/Models/employee_poi_data.dart';
 import 'package:attendance_app/Models/poi_data.dart';
 import 'package:flutter/material.dart';
 import 'package:attendance_app/Models/employee_data.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/services.dart';
 import '../../../Services/api_call.dart';
 import 'field_force_delete_row.dart';
 
+List<EmpPoiDataModel> employeePoiList = [];
 List<EmployeeDataModel> data = [];
 
 class FieldForceData extends StatefulWidget {
@@ -27,7 +29,7 @@ class FieldForceData extends StatefulWidget {
 class _FieldForceDataState extends State<FieldForceData> {
   ScrollController scrollController = ScrollController();
   var rowsPerPage = "50";
-  String pageNumber = "1";
+  var pageNumber = 1;
 
   //Employee Poi Add Row
   TextEditingController emplopyeeIdController = TextEditingController();
@@ -51,7 +53,8 @@ class _FieldForceDataState extends State<FieldForceData> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: ApiCall().getAllEmployee(widget.token, rowsPerPage, pageNumber),
+      future: ApiCall()
+          .getAllEmployee(widget.token, rowsPerPage, pageNumber.toString()),
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.data == null) {
           return const Center(
@@ -105,6 +108,23 @@ class _FieldForceDataState extends State<FieldForceData> {
                         //     maxLines: 1,
                         //   ),
                         // ),
+                        pageNumber == 1
+                            ? const Text('')
+                            : IconButton(
+                                onPressed: () {
+                                  pageNumber--;
+                                  setState(() {});
+                                },
+                                icon: const Icon(Icons.chevron_left),
+                              ),
+                        IconButton(
+                          onPressed: () {
+                            pageNumber++;
+                            setState(() {});
+                            print(pageNumber);
+                          },
+                          icon: const Icon(Icons.chevron_right),
+                        ),
                         const SizedBox(width: 10),
                         SizedBox(
                           width: 80,
@@ -115,7 +135,7 @@ class _FieldForceDataState extends State<FieldForceData> {
                               FilteringTextInputFormatter.digitsOnly
                             ],
                             onChanged: (val) {
-                              pageNumber = val;
+                              pageNumber = int.parse(val);
                             },
                             style: const TextStyle(color: Colors.white),
                             decoration: InputDecoration(
@@ -217,8 +237,11 @@ class _FieldForceDataState extends State<FieldForceData> {
 class TableRow extends DataTableSource {
   BuildContext context;
   List<EmployeeDataModel> employeeData;
+
   String token;
   Function refresh;
+  String pageNumber = "1";
+  String rowsPerPage = "50";
   TextEditingController controller;
   // List<dynamic> poiPoints = widget.getList;
   List<PoiDataModel> poiPoints;
@@ -392,28 +415,34 @@ class TableRow extends DataTableSource {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  DataTable(
-                                    columns: const <DataColumn>[
-                                      DataColumn(label: Text("POI ID")),
-                                      DataColumn(label: Text("POI Name")),
-                                      DataColumn(label: Text("Action"))
-                                    ],
-                                    rows: const <DataRow>[
-                                      DataRow(
-                                        cells: <DataCell>[
-                                          DataCell(
-                                            Text("poiId1"),
-                                          ),
-                                          DataCell(
-                                            Text("name2"),
-                                          ),
-                                          DataCell(
-                                            Text("Delete"),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
+                                  FutureBuilder(
+                                      future: ApiCall().getAllEmployeePoi(token,
+                                          rowsPerPage, pageNumber.toString()),
+                                      builder:
+                                          (context, AsyncSnapshot snapshot) {
+                                        if (snapshot.data == null) {
+                                          return const Center(
+                                            child: Text("loading......"),
+                                          );
+                                        } else if (snapshot.hasData) {
+                                          print(
+                                              'showing snapshot ${snapshot.data}');
+                                          snapshot.data
+                                              as List<EmpPoiDataModel>;
+                                          return DataTable(
+                                            columns: const <DataColumn>[
+                                              DataColumn(label: Text("POI ID")),
+                                              DataColumn(
+                                                  label: Text("POI Name")),
+                                              DataColumn(label: Text("Action"))
+                                            ],
+                                            rows: _createRows,
+                                          );
+                                        } else {
+                                          return const Text(
+                                              'Something is wrong');
+                                        }
+                                      }),
                                 ],
                               ),
                             ),
@@ -456,6 +485,24 @@ class TableRow extends DataTableSource {
     ]);
   }
 
+  List<DataRow> get _createRows {
+    return employeePoiList
+        .map((file) => DataRow(
+              cells: <DataCell>[
+                DataCell(
+                  Text(file.cid),
+                ),
+                DataCell(
+                  Text(file.poiIds.first.poiId),
+                ),
+                DataCell(
+                  Text(file.employeeId),
+                ),
+              ],
+            ))
+        .toList();
+  }
+
   @override
   bool get isRowCountApproximate => false;
 
@@ -466,31 +513,31 @@ class TableRow extends DataTableSource {
   int get selectedRowCount => 0;
 }
 
-class PoiSingleButton extends StatefulWidget {
-  String title;
-  // List<PoiDataModel> poipoints;
-  PoiSingleButton({Key? key, required this.title}) : super(key: key);
+// class PoiSingleButton extends StatefulWidget {
+//   String title;
+//   // List<PoiDataModel> poipoints;
+//   PoiSingleButton({Key? key, required this.title}) : super(key: key);
 
-  @override
-  State<PoiSingleButton> createState() => _PoiSingleButtonState();
-}
+//   @override
+//   State<PoiSingleButton> createState() => _PoiSingleButtonState();
+// }
 
-class _PoiSingleButtonState extends State<PoiSingleButton> {
-  bool pressAttention = false;
-  @override
-  Widget build(BuildContext context) {
-    print(widget.title);
+// class _PoiSingleButtonState extends State<PoiSingleButton> {
+//   bool pressAttention = false;
+//   @override
+//   Widget build(BuildContext context) {
+//     // print(widget.title);
 
-    return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          pressAttention = !pressAttention;
-        });
-      },
-      style: ElevatedButton.styleFrom(
-        primary: pressAttention ? primaryColor : secondaryColor,
-      ),
-      child: Text(widget.title),
-    );
-  }
-}
+//     return ElevatedButton(
+//       onPressed: () {
+//         setState(() {
+//           pressAttention = !pressAttention;
+//         });
+//       },
+//       style: ElevatedButton.styleFrom(
+//         primary: pressAttention ? primaryColor : secondaryColor,
+//       ),
+//       child: Text(widget.title),
+//     );
+//   }
+// }

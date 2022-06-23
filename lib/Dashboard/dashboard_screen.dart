@@ -114,7 +114,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     String csv = const ListToCsvConverter().convert(rows);
 
     String withHeading =
-        'cid,employeeId,employeeName,designation,mobile,email,market,territory,area,region,zone\n' +
+        'poiId,poiType,union,thana,district,division,market,territory,area,region,zone,lat,long\n' +
             csv;
     AnchorElement()
       ..href =
@@ -150,7 +150,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     String csv = const ListToCsvConverter().convert(rows);
 
     String withHeading =
-        'poiId,poiType,union,thana,district,division,market,territory,area,region,zone,lat,long\n' +
+        'cid,employeeId,employeeName,designation,mobile,email,market,territory,area,region,zone\n' +
             csv;
     AnchorElement()
       ..href =
