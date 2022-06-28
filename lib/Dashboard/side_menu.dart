@@ -191,8 +191,8 @@ class _DrawListTileState extends State<DrawListTile> {
                   : widget.title == "Attendance table"
                       ? widget.setString("Attendance table")
                       : widget.title == "POI User"
-                          ? widget.setString("POI User")
-                          : widget.setString("Report");
+                          ? () {}
+                          : () {};
         },
         leading: Icon(widget.icon, size: 18, color: Colors.white54),
         horizontalTitleGap: 0.0,

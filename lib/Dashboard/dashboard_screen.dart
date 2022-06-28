@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:html';
 import 'dart:typed_data';
+import 'package:attendance_app/Dashboard/poi_user.dart';
+import 'package:attendance_app/Dashboard/report.dart';
 import 'package:attendance_app/Models/employee_data.dart';
 import 'package:attendance_app/Models/poi_data.dart';
 import 'package:attendance_app/Services/api_call.dart';
@@ -67,7 +69,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       builder: (context, child) {
         return Theme(
           data: ThemeData(
-            colorScheme: ColorScheme.dark(
+            colorScheme: const ColorScheme.dark(
               primary: primaryColor,
               surface: Color(0xff212332),
             ),
@@ -94,8 +96,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       builder: (context, child) {
         return Theme(
           data: ThemeData(
-            primaryColor: Colors.white,
-          ), // This will change to light theme.
+            colorScheme: const ColorScheme.dark(
+              primary: primaryColor,
+              surface: Color(0xff212332),
+            ),
+            dialogBackgroundColor: const Color(0xff2A2D3E),
+          ), // // This will change to light theme.
           child: child!,
         );
       },
@@ -550,7 +556,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         scrollDirection: Axis.horizontal,
                                         child: Row(
                                           children: [
-                                            Text('From : '),
+                                            const Text('From : '),
                                             initialValue(dateFromSelected),
                                             IconButton(
                                               onPressed: () {
@@ -561,7 +567,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                 color: primaryColor,
                                               ),
                                             ),
-                                            Text(' --  To : '),
+                                            const Text(' --  To : '),
                                             initialValue(dateToSelected),
                                             IconButton(
                                               onPressed: () {
@@ -778,7 +784,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   //setState(() {});
                                 },
                                 icon: const Icon(Icons.file_copy),
-                                label: const Text("POI Upload"),
+                                label: widget.which_button == 'POI Table'
+                                    ? const Text("POI Upload")
+                                    : const Text("FF Upload"),
                               ),
                               TextButton(
                                 onPressed: () {
@@ -926,12 +934,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             },
                             getList: getList,
                           )
-                        : PoiTableData(
-                            token: widget.token,
-                            getList: (value) async {
-                              getList = value;
-                            },
-                          ),
+                        : widget.which_button == "POI Table"
+                            ? PoiTableData(
+                                token: widget.token,
+                                getList: (value) async {
+                                  getList = value;
+                                },
+                              )
+                            : widget.which_button == "POI User"
+                                ? poiUser()
+                                : ReportPage(),
               ),
             )
           ],

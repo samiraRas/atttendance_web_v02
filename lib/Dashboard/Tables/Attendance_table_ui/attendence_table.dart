@@ -265,22 +265,21 @@ class TableRow extends DataTableSource {
                 Text(dtformat.format(attendanceData[index].attendanceDate)))),
         DataCell(
             Center(child: Text(attendanceData[index].distance.toString()))),
-        DataCell(Center(
+        DataCell(
+          Center(
             child: TextButton(
-                onPressed: () {
-                  showDialog(
-                    context: context!,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        backgroundColor: bgColor,
-                        content: SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.45,
-                        ),
-                      );
-                    },
-                  );
-                },
-                child: const Text('details')))),
+              onPressed: () {
+                showDialog(
+                  context: context!,
+                  builder: (BuildContext context) {
+                    return buildAlertDialog();
+                  },
+                );
+              },
+              child: const Text('Details'),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -293,4 +292,31 @@ class TableRow extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+}
+
+class buildAlertDialog extends StatelessWidget {
+  const buildAlertDialog({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+    return AlertDialog(
+      backgroundColor: bgColor,
+      content: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.45,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Form(
+                key: _formKey,
+                child: Column(children: []),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

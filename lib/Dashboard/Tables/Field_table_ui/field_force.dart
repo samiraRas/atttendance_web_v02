@@ -428,103 +428,101 @@ class TableRow extends DataTableSource {
                                   ],
                                 ),
 
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        FutureBuilder(
-                                            future: ApiCall().getAllEmployeePoi(
-                                                token,
-                                                rowsPerPage,
-                                                pageNumber.toString()),
-                                            builder: (context,
-                                                AsyncSnapshot snapshot) {
-                                              if (snapshot.data == null) {
-                                                return const Center(
-                                                  child: Text("loading......"),
-                                                );
-                                              } else if (snapshot.hasData) {
-                                                // print(
-                                                //     'showing snapshot ${snapshot.data}');
-                                                snapshot.data
-                                                    as List<EmpPoiDataModel>;
-                                                return DataTable(
-                                                  columns: const <DataColumn>[
-                                                    DataColumn(
-                                                        label: Text("POI ID")),
-                                                    // DataColumn(
-                                                    //     label: Text("POI Name")),
-                                                    DataColumn(
-                                                        label: Text("Action"))
-                                                  ],
-                                                  rows: List.generate(
-                                                    snapshot.data.length,
-                                                    (index) {
-                                                      var empPoi =
-                                                          snapshot.data[index];
-                                                      item = snapshot
-                                                          .data[index].poiIds;
+                                // Expanded(
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(8.0),
+                                //     child: Row(
+                                //       mainAxisAlignment:
+                                //           MainAxisAlignment.center,
+                                //       children: [
+                                //         FutureBuilder(
+                                //           future: ApiCall().getAllEmployeePoi(
+                                //               token,
+                                //               rowsPerPage,
+                                //               pageNumber.toString()),
+                                //           builder: (context,
+                                //               AsyncSnapshot snapshot) {
+                                //             if (snapshot.data == null) {
+                                //               return const Center(
+                                //                 child: Text("loading......"),
+                                //               );
+                                //             } else if (snapshot.hasData) {
+                                //               // print(
+                                //               //     'showing snapshot ${snapshot.data}');
+                                //               snapshot.data
+                                //                   as List<EmpPoiDataModel>;
+                                //               return DataTable(
+                                //                 columns: const <DataColumn>[
+                                //                   DataColumn(
+                                //                       label: Text("POI ID")),
+                                //                   // DataColumn(
+                                //                   //     label: Text("POI Name")),
+                                //                   DataColumn(
+                                //                       label: Text("Action"))
+                                //                 ],
+                                //                 rows: List.generate(
+                                //                   snapshot.data.length,
+                                //                   (index) {
+                                //                     var empPoi =
+                                //                         snapshot.data[index];
+                                //                     item = snapshot
+                                //                         .data[index].poiIds;
 
-                                                      print("${item}");
+                                //                     print("${item}");
 
-                                                      // item.forEach((element) {
-                                                      //   print(element.poiIds);
-                                                      // });
-                                                      // empPoi.poiIds[index]
-                                                      //     .poiId = [];
+                                //                     // item.forEach((element) {
+                                //                     //   print(element.poiIds);
+                                //                     // });
+                                //                     // empPoi.poiIds[index]
+                                //                     //     .poiId = [];
 
-                                                      return DataRow(cells: [
-                                                        snapshot.data[index]
-                                                                    .id ==
-                                                                snapshot.data
-                                                                        .poiIds[
-                                                                    index]
-                                                            ? DataCell(
-                                                                // item.forEach((element) => Text("${element.poiIds}"))
-                                                                Text(
-                                                                    "${item[index].poiId}"),
-                                                              )
-                                                            : const DataCell(
-                                                                // item.forEach((element) => Text("${element.poiIds}"))
-                                                                Text("No Data"),
-                                                              ),
-                                                        // DataCell(
-                                                        //   Text(
-                                                        //     empPoi.poiIds.first
-                                                        //         .poiId,
-                                                        //   ),
-                                                        // ),
-                                                        DataCell(IconButton(
-                                                          icon: const Icon(
-                                                            Icons.delete,
-                                                            color: Colors.red,
-                                                          ),
-                                                          onPressed: () async {
-                                                            await ApiCall()
-                                                                .delEmpPoi(
-                                                                    token,
-                                                                    empPoi.id,
-                                                                    empPoi.cid,
-                                                                    empPoi
-                                                                        .poiId);
-                                                          },
-                                                        )),
-                                                      ]);
-                                                    },
-                                                  ),
-                                                );
-                                              } else {
-                                                return const Text(
-                                                    'Something is wrong');
-                                              }
-                                            }),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                //                     return DataRow(cells: [
+                                //                       snapshot.data[index].id ==
+                                //                               snapshot.data
+                                //                                   .poiIds[index]
+                                //                           ? DataCell(
+                                //                               // item.forEach((element) => Text("${element.poiIds}"))
+                                //                               Text(
+                                //                                   "${item[index].poiId}"),
+                                //                             )
+                                //                           : const DataCell(
+                                //                               // item.forEach((element) => Text("${element.poiIds}"))
+                                //                               Text("No Data"),
+                                //                             ),
+                                //                       // DataCell(
+                                //                       //   Text(
+                                //                       //     empPoi.poiIds.first
+                                //                       //         .poiId,
+                                //                       //   ),
+                                //                       // ),
+                                //                       DataCell(IconButton(
+                                //                         icon: const Icon(
+                                //                           Icons.delete,
+                                //                           color: Colors.red,
+                                //                         ),
+                                //                         onPressed: () async {
+                                //                           await ApiCall()
+                                //                               .delEmpPoi(
+                                //                                   token,
+                                //                                   empPoi.id,
+                                //                                   empPoi.cid,
+                                //                                   empPoi.poiId);
+                                //                         },
+                                //                       )),
+                                //                     ]);
+                                //                   },
+                                //                 ),
+                                //               );
+                                //             } else {
+                                //               return const Text(
+                                //                   'Something is wrong');
+                                //             }
+                                //           },
+                                //         ),
+                                //       ],
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),

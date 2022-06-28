@@ -442,6 +442,7 @@ class ApiCall {
     String token,
     String poiId,
   ) async {
+    print("employeePOi${id}");
     final response = await http.post(
       Uri.parse(ApiList.employeePoiAddApi(id)),
       headers: <String, String>{
@@ -452,6 +453,7 @@ class ApiCall {
         "poiId": poiId,
       }),
     );
+
     // print('apicall--->');
     // print(response.statusCode);
     if (response.statusCode == 200) {
