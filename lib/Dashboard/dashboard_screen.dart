@@ -3,10 +3,10 @@ import 'dart:html';
 import 'dart:typed_data';
 import 'package:attendance_app/Dashboard/poi_user.dart';
 import 'package:attendance_app/Dashboard/report.dart';
+import 'package:attendance_app/Models/attendance_data.dart';
 import 'package:attendance_app/Models/employee_data.dart';
 import 'package:attendance_app/Models/poi_data.dart';
 import 'package:attendance_app/Services/api_call.dart';
-import 'package:attendance_app/Sharepreference/sharedpred.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -121,7 +121,41 @@ class _DashboardScreenState extends State<DashboardScreen> {
   //Download CSv
   List<PoiDataModel> getList = [];
   List<EmployeeDataModel> getFieldForceList = [];
+  List<AttendanceDataModel> getAttendanceList = [];
+  final DateFormat dtformat = DateFormat('dd-MM-yyyy');
   // List<EmployeeDataModel> getemployeeList = [];
+
+  getAttendanceCSV(getAttendanceList) {
+    // print(getFieldForceList[0].employeeName);
+    // print('inside download function ->${widget.which_button}');
+
+    List<List<dynamic>> rows = [];
+
+    for (int i = 0; i < getAttendanceList.length; i++) {
+      List<dynamic> row = [];
+      row.add(getAttendanceList[i].employeeName);
+      row.add(getAttendanceList[i].employeeId);
+      row.add(getAttendanceList[i].poiId.first.poiId);
+      row.add(DateFormat.jm().format(
+          DateTime.parse((getAttendanceList[i].createdAt.toString()))
+              .toLocal()));
+      row.add(dtformat.format(getAttendanceList[i].attendanceDate));
+      row.add(getAttendanceList[i].mobile);
+
+      rows.add(row);
+      // print(rows);
+    }
+    String csv = const ListToCsvConverter().convert(rows);
+
+    String withHeading =
+        'employeeName,employeeId,poiId,submitTime,submitDate,mobile\n' + csv;
+    AnchorElement()
+      ..href =
+          '${Uri.dataFromString(withHeading, mimeType: 'text/csv', encoding: utf8)}'
+      ..download = 'file.csv'
+      ..style.display = 'none'
+      ..click();
+  }
 
   getFieldCSV(getFieldForceList) {
     // print(getFieldForceList[0].employeeName);
@@ -846,6 +880,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 getCsv(getList);
                               } else if (widget.which_button == 'Field Force') {
                                 getFieldCSV(getFieldForceList);
+                              } else if (widget.which_button ==
+                                  'Attendance table') {
+                                getAttendanceCSV(getAttendanceList);
                               }
                             },
                             icon: const Icon(Icons.download),
@@ -928,6 +965,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 scrollDirection: Axis.vertical,
                 child: widget.which_button == "Attendance table"
                     ? AttendenceTableData(
+                        getAttendanceList: (value) async {
+                          getAttendanceList = value;
+                        },
                         token: widget.token,
                       )
                     : widget.which_button == "Field Force"

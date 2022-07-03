@@ -488,12 +488,12 @@ class ApiCall {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $token',
         });
-    print('Json -> ${response.body}');
+    // print('Json -> ${response.body}');
 
     if (response.statusCode == 200) {
       attendanceList = attendanceDataModelFromJson(response.body);
 
-      print('attendanceList print-> ${attendanceList.length}');
+      // print('attendanceList print-> ${attendanceList.length}');
 
       return attendanceList;
     } else {
@@ -516,9 +516,10 @@ class ApiCall {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $token',
         });
+    // print('Json -> ${response.body}');
     if (response.statusCode == 200) {
       employeePoiList = empPoiDataModelFromJson(response.body);
-      print('employeePoiList print-> ${employeePoiList}');
+      // print('employeePoiList print-> ${employeePoiList}');
       // if (employeePoiList == null) {
       //   return;
       // } else {

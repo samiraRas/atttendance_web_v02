@@ -12,7 +12,10 @@ List<AttendanceDataModel> data = [];
 
 class AttendenceTableData extends StatefulWidget {
   String token;
-  AttendenceTableData({Key? key, required this.token}) : super(key: key);
+  Function(List<AttendanceDataModel>) getAttendanceList;
+  AttendenceTableData(
+      {Key? key, required this.token, required this.getAttendanceList})
+      : super(key: key);
   @override
   State<AttendenceTableData> createState() => _AttendenceTableDataState();
 }
@@ -44,6 +47,8 @@ class _AttendenceTableDataState extends State<AttendenceTableData> {
         } else if (snapshot.hasData) {
           print('showing snapshot ${snapshot.data}');
           data = snapshot.data;
+          widget.getAttendanceList(data);
+
           // data.forEach((element) {
           //   print(element.id);
 
@@ -178,23 +183,17 @@ class _AttendenceTableDataState extends State<AttendenceTableData> {
           style: Theme.of(context).textTheme.subtitle2,
         ),
       ),
-      DataColumn(
-        label: Text(
-          "Mobile Number",
-          style: Theme.of(context).textTheme.subtitle2,
-        ),
-      ),
       const DataColumn(
         label: Text(
           "",
         ),
       ),
-      // DataColumn(
-      //   label: Text(
-      //     "POI Id",
-      //     style: Theme.of(context).textTheme.subtitle2,
-      //   ),
-      // ),
+      DataColumn(
+        label: Text(
+          "POI Id",
+          style: Theme.of(context).textTheme.subtitle2,
+        ),
+      ),
       DataColumn(
         label: Text(
           "Submit Time",
@@ -209,7 +208,7 @@ class _AttendenceTableDataState extends State<AttendenceTableData> {
       ),
       DataColumn(
         label: Text(
-          "Distance (m)",
+          "Mobile Number",
           style: Theme.of(context).textTheme.subtitle2,
         ),
       ),
@@ -246,12 +245,12 @@ class TableRow extends DataTableSource {
       cells: [
         DataCell(Center(child: Text(attendanceData[index].employeeName))),
         DataCell(Center(child: Text(attendanceData[index].employeeId))),
-        DataCell(Center(child: Text(attendanceData[index].mobile))),
+
         const DataCell(Center(child: Text(""))),
-        // (attendanceData[index].poiId.length > 0)
-        //     ? DataCell(
-        //         Center(child: Text(attendanceData[index].poiId.first.poiId)))
-        //     : const DataCell(Center(child: Text('No PoiID'))),
+        (attendanceData[index].poiId.length > 0)
+            ? DataCell(
+                Center(child: Text(attendanceData[index].poiId.first.poiId)))
+            : const DataCell(Center(child: Text('No PoiID'))),
         // DataCell(Center(
         //     child: Text(
         //         tmformat.format(attendanceData[index].attendanceDateTime)))),
@@ -266,8 +265,7 @@ class TableRow extends DataTableSource {
         DataCell(Center(
             child:
                 Text(dtformat.format(attendanceData[index].attendanceDate)))),
-        DataCell(
-            Center(child: Text(attendanceData[index].distance.toString()))),
+        DataCell(Center(child: Text(attendanceData[index].mobile))),
         const DataCell(
           Center(child: Text("Details")),
         ),
