@@ -6,6 +6,7 @@ import 'package:attendance_app/Dashboard/report.dart';
 import 'package:attendance_app/Models/employee_data.dart';
 import 'package:attendance_app/Models/poi_data.dart';
 import 'package:attendance_app/Services/api_call.dart';
+import 'package:attendance_app/Sharepreference/sharedpred.dart';
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import 'package:attendance_app/widgets/responsive_login.dart';
 import 'package:attendance_app/Services/constants.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Tables/Attendance_table_ui/attendence_table.dart';
 import 'Tables/Field_table_ui/field_force.dart';
 import 'Tables/Field_table_ui/filed_add_row.dart';
@@ -40,6 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   // List<dynamic> usersFiltered = [];
   // TextEditingController controller = TextEditingController();
   // String _searchResult = '';
+  String cid = "";
 
   initialValue(String val) {
     return Text(val.toString());
@@ -54,8 +57,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   void initState() {
-    // print('dash screen is carrying the token: ${widget.token}');
-
+    SharedPreferences.getInstance().then((prefs) async {
+      cid = prefs.getString("cid")!;
+    });
     super.initState();
   }
 

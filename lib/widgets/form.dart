@@ -1,5 +1,6 @@
 import 'package:attendance_app/Dashboard/dashboard.dart';
 import 'package:attendance_app/Services/api_call.dart';
+import 'package:attendance_app/Sharepreference/sharedpred.dart';
 import 'package:flutter/material.dart';
 import 'package:attendance_app/Services/constants.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -117,9 +118,11 @@ class FormScreenState extends State<FormScreen> {
       var body =
           await ApiCall().login(emailController.text, passController.text);
       var token = body["token"];
+      var name = body["company"]["name"];
+      var cid = body["company"]["cid"];
       // print('token: $token');
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      await pref.setString("token", token);
+      SharedPreferncesMethod()
+          .sharedPreferenceSetDataForLogin(name, token, cid);
 
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => DashboardPage(token: token)),

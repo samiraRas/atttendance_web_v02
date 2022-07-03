@@ -5,9 +5,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:attendance_app/login.dart';
 import 'package:attendance_app/Services/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:badges/badges.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SideMenu extends StatefulWidget {
@@ -21,43 +18,55 @@ class SideMenu extends StatefulWidget {
 class _SideMenuState extends State<SideMenu> {
   File _file = File("zz");
   Uint8List webImage = Uint8List(10);
+  String name = "";
 
-  uploadImage() async {
-    var permissionStatus = Permission.mediaLibrary;
-
-    // MOBILE
-    if (!kIsWeb && await permissionStatus.isGranted) {
-      final ImagePicker _picker = ImagePicker();
-      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-
-      if (image != null) {
-        var selected = File(image.path);
-
-        setState(() {
-          _file = selected;
-        });
-      } else {
-        const Text("No file selected");
-      }
-    }
-    // WEB
-    else if (kIsWeb) {
-      // print('tuh');
-      final ImagePicker _picker = ImagePicker();
-      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        var f = await image.readAsBytes();
-        setState(() {
-          _file = File("a");
-          webImage = f;
-        });
-      } else {
-        const Text("No file selected");
-      }
-    } else {
-      const Text("Permission not granted");
-    }
+  @override
+  void initState() {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      SharedPreferences.getInstance().then((prefs) async {
+        name = prefs.getString("name")!;
+      });
+      setState(() {});
+    });
+    super.initState();
   }
+
+  // uploadImage() async {
+  //   var permissionStatus = Permission.mediaLibrary;
+
+  //   // MOBILE
+  //   if (!kIsWeb && await permissionStatus.isGranted) {
+  //     final ImagePicker _picker = ImagePicker();
+  //     XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+  //     if (image != null) {
+  //       var selected = File(image.path);
+
+  //       setState(() {
+  //         _file = selected;
+  //       });
+  //     } else {
+  //       const Text("No file selected");
+  //     }
+  //   }
+  //   // WEB
+  //   else if (kIsWeb) {
+  //     // print('tuh');
+  //     final ImagePicker _picker = ImagePicker();
+  //     XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+  //     if (image != null) {
+  //       var f = await image.readAsBytes();
+  //       setState(() {
+  //         _file = File("a");
+  //         webImage = f;
+  //       });
+  //     } else {
+  //       const Text("No file selected");
+  //     }
+  //   } else {
+  //     const Text("Permission not granted");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -101,9 +110,9 @@ class _SideMenuState extends State<SideMenu> {
                     ),
                   ),
                   // ),
-                  const Text(
-                    "Company Name",
-                    style: TextStyle(color: Colors.white54),
+                  Text(
+                    name,
+                    style: const TextStyle(color: Colors.white54),
                   )
                 ],
               ),

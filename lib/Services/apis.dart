@@ -48,6 +48,9 @@ class ApiList {
   static String singleEmployeeDelete(String id) =>
       'http://$_ip:$_port/api/v1/user/employee/$id';
 
+  static String imageAPI(String id) =>
+      'http://$_ip:$_port/api/v1/attendance/attendance/$id/image';
+
   // static String getMyTeams(String id) => 'http://$_ip:$_port/myteams/$id';
 
   // static String getMemberDetails(String id) => 'http://$_ip:$_port/myteams/$id';

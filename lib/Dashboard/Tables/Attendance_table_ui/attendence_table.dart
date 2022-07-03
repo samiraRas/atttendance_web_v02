@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:attendance_app/Models/attendance_data.dart';
+import 'package:attendance_app/Services/apis.dart';
 import 'package:attendance_app/Services/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -39,13 +42,13 @@ class _AttendenceTableDataState extends State<AttendenceTableData> {
             child: Text("loading......"),
           );
         } else if (snapshot.hasData) {
-          // print('showing snapshot ${snapshot.data}');
-          data = snapshot.data as List<AttendanceDataModel>;
-          data.forEach((element) {
-            print(element.id);
+          print('showing snapshot ${snapshot.data}');
+          data = snapshot.data;
+          // data.forEach((element) {
+          //   print(element.id);
 
-            //   print(element.poiId.length);
-          });
+          //   print(element.poiId.length);
+          // });
 
           return SizedBox(
             width: double.infinity,
@@ -186,12 +189,12 @@ class _AttendenceTableDataState extends State<AttendenceTableData> {
           "",
         ),
       ),
-      DataColumn(
-        label: Text(
-          "POI Id",
-          style: Theme.of(context).textTheme.subtitle2,
-        ),
-      ),
+      // DataColumn(
+      //   label: Text(
+      //     "POI Id",
+      //     style: Theme.of(context).textTheme.subtitle2,
+      //   ),
+      // ),
       DataColumn(
         label: Text(
           "Submit Time",
@@ -245,10 +248,10 @@ class TableRow extends DataTableSource {
         DataCell(Center(child: Text(attendanceData[index].employeeId))),
         DataCell(Center(child: Text(attendanceData[index].mobile))),
         const DataCell(Center(child: Text(""))),
-        (attendanceData[index].poiId.length > 0)
-            ? DataCell(
-                Center(child: Text(attendanceData[index].poiId.first.poiId)))
-            : const DataCell(Center(child: Text('No PoiID'))),
+        // (attendanceData[index].poiId.length > 0)
+        //     ? DataCell(
+        //         Center(child: Text(attendanceData[index].poiId.first.poiId)))
+        //     : const DataCell(Center(child: Text('No PoiID'))),
         // DataCell(Center(
         //     child: Text(
         //         tmformat.format(attendanceData[index].attendanceDateTime)))),
@@ -265,20 +268,8 @@ class TableRow extends DataTableSource {
                 Text(dtformat.format(attendanceData[index].attendanceDate)))),
         DataCell(
             Center(child: Text(attendanceData[index].distance.toString()))),
-        DataCell(
-          Center(
-            child: TextButton(
-              onPressed: () {
-                showDialog(
-                  context: context!,
-                  builder: (BuildContext context) {
-                    return buildAlertDialog();
-                  },
-                );
-              },
-              child: const Text('Details'),
-            ),
-          ),
+        const DataCell(
+          Center(child: Text("Details")),
         ),
       ],
     );

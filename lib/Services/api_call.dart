@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:attendance_app/Models/attendance_data.dart';
 import 'package:attendance_app/Models/employee_data.dart';
-import 'package:attendance_app/Models/employee_poi_data.dart';
+import 'package:attendance_app/Models/employee_poi_data_model.dart';
 import 'package:attendance_app/Models/poi_data.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -382,7 +382,7 @@ class ApiCall {
     }
   }
 
-  // Single Field Force Add Row
+  //###############################              Single Field Force Add Row              #############################
   Future singleFieldForceAddRow(
     String token,
     String cid,
@@ -436,7 +436,8 @@ class ApiCall {
     return "Null";
   }
 
-  // Single Employee Poi Add Row
+  //####################################        Single Employee Poi Add Row     #############################
+
   Future singleEmployeePoiAddRow(
     String id,
     String token,
@@ -471,6 +472,8 @@ class ApiCall {
     return "Null";
   }
 
+// #################################      ATTENDANCE LIST             ##################################
+
   List<AttendanceDataModel> attendanceList = [];
 
   Future getAllAttendance(
@@ -485,12 +488,12 @@ class ApiCall {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $token',
         });
+    print('Json -> ${response.body}');
 
     if (response.statusCode == 200) {
-      List<AttendanceDataModel> attendanceList =
-          attendanceDataModelFromJson(response.body);
+      attendanceList = attendanceDataModelFromJson(response.body);
 
-      print('attendanceList print-> ${attendanceList}');
+      print('attendanceList print-> ${attendanceList.length}');
 
       return attendanceList;
     } else {
@@ -498,12 +501,14 @@ class ApiCall {
     }
   }
 
+// ################################## Employee POI List ########################################################
+
   List<EmpPoiDataModel> employeePoiList = [];
   Future getAllEmployeePoi(
       String token, String rowsPerPage, String pageNumber) async {
-    print('getAllEmployeePoi is getting token or not->${token}');
-    print('getAllEmployeePoi is getting rowsperpage or not->${rowsPerPage}');
-    print('getAllEmployeePoi is getting pageNumber or not->${pageNumber}');
+    // print('getAllEmployeePoi is getting token or not->${token}');
+    // print('getAllEmployeePoi is getting rowsperpage or not->${rowsPerPage}');
+    // print('getAllEmployeePoi is getting pageNumber or not->${pageNumber}');
 
     final response = await http.get(
         Uri.parse(ApiList.getemployeePoiApi(rowsPerPage, pageNumber)),
@@ -512,8 +517,7 @@ class ApiCall {
           'Authorization': 'Bearer $token',
         });
     if (response.statusCode == 200) {
-      List<EmpPoiDataModel> employeePoiList =
-          empPoiDataModelFromJson(response.body);
+      employeePoiList = empPoiDataModelFromJson(response.body);
       print('employeePoiList print-> ${employeePoiList}');
       // if (employeePoiList == null) {
       //   return;
@@ -524,6 +528,8 @@ class ApiCall {
       print("message failed");
     }
   }
+
+  // ################################## Employee POI List ########################################################
 
   Future delEmpPoi(String token, String id, cid, poiId) async {
     final response = await http.delete(Uri.parse(ApiList.employeePoiDelete(id)),
