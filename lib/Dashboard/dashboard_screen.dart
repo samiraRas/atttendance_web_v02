@@ -152,7 +152,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     AnchorElement()
       ..href =
           '${Uri.dataFromString(withHeading, mimeType: 'text/csv', encoding: utf8)}'
-      ..download = 'file.csv'
+      ..download = 'AttendanceCsv.csv'
       ..style.display = 'none'
       ..click();
   }
